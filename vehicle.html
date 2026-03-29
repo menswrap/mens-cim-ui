@@ -9,8 +9,15 @@
 body {
   margin:0;
   font-family: sans-serif;
-  background:#0F1115;
   color:#fff;
+
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.7), #0F1115),
+    url('bg.jpg');
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
 }
 
 .container { padding:16px; }
@@ -48,11 +55,13 @@ body {
   border-radius:999px;
   overflow:hidden;
 
-  border:1px solid #333; /* 新增外框 */
+  border:1px solid #333;/* 新增外框 */
+  position:relative;
 }
 .bar {
   height:100%;
   border-radius:999px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4) inset;
 }
 
 /* Footer */
@@ -85,7 +94,7 @@ body {
   border-radius:20px;
   font-size:12px;
   display:none;
-｝
+}
   @keyframes blink {
   0% { opacity:1; }
   50% { opacity:0.3; }
@@ -186,6 +195,7 @@ function renderWarranty(){
   <div class="bar-bg" style="border:1px solid ${borderColor}">
   <div class="bar ${dangerClass}" 
      style="width:${percent}%;background:${getColor(w.ratio)}">
+</div>
 </div>
 
   <div style="font-size:12px">${percent}%</div>
