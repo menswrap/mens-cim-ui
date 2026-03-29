@@ -47,6 +47,8 @@ body {
   background:#2A2E36;
   border-radius:999px;
   overflow:hidden;
+
+  border:1px solid #333; /* 新增外框 */
 }
 .bar {
   height:100%;
@@ -83,6 +85,15 @@ body {
   border-radius:20px;
   font-size:12px;
   display:none;
+｝
+  @keyframes blink {
+  0% { opacity:1; }
+  50% { opacity:0.3; }
+  100% { opacity:1; }
+}
+
+.danger {
+  animation: blink 1s infinite;
 }
 </style>
 </head>
@@ -163,18 +174,22 @@ function renderWarranty(){
     .sort((a,b)=>a.ratio-b.ratio)
     .forEach(w => {
       const percent = Math.round(w.ratio*100);
-
+      const dangerClass = w.ratio <= 0 ? "danger" : "";
+      const borderColor = getBorderColor(w.ratio); // 🔥加這行
       const div = document.createElement("div");
       div.className="card";
 
       div.innerHTML = `
-        <div>${w.name}</div>
-        <div style="font-size:12px;color:#aaa">${w.area}</div>
-        <div class="bar-bg">
-          <div class="bar" style="width:${percent}%;background:${getColor(w.ratio)}"></div>
-        </div>
-        <div style="font-size:12px">${percent}%</div>
-      `;
+  <div>${w.name}</div>
+  <div style="font-size:12px;color:#aaa">${w.area}</div>
+
+  <div class="bar-bg" style="border:1px solid ${borderColor}">
+  <div class="bar ${dangerClass}" 
+     style="width:${percent}%;background:${getColor(w.ratio)}">
+</div>
+
+  <div style="font-size:12px">${percent}%</div>
+  `;
 
       el.appendChild(div);
     });
@@ -200,12 +215,20 @@ function showToast(){
   t.style.display="block";
   setTimeout(()=>t.style.display="none",3000);
 }
-
+  
 // ===== 切車（先佔位）=====
 function toggleCars(){
   alert("未來這裡做切車");
 }
 
+// ===== 血條外框 =====  
+function getBorderColor(r){
+  if(r <= 0) return "#E53935";     // 過期
+  if(r <= 1/7) return "#E53935";   // 危險
+  if(r <= 1/5) return "#FB8C00";   // 警告
+  return "#333";
+}  
+  
 // ===== 綁定（先佔位）=====
 document.getElementById("bindBtn").onclick = function(){
   alert("這裡之後接 LIFF 綁定");
