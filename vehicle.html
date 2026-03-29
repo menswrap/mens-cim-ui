@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MENS 車輛履歷</title>
+
+<style>
+body {
+  margin:0;
+  font-family: sans-serif;
+  background:#0F1115;
+  color:#fff;
+}
+
+.container { padding:16px; }
+
+/* Header */
+.header {
+  margin-bottom:16px;
+}
+.plate {
+  font-size:28px;
+  font-weight:bold;
+}
+.vid {
+  font-size:12px;
+  color:#aaa;
+}
+.status {
+  font-size:12px;
+  color:#00E676;
+}
+
+/* Card */
+.card {
+  background:#1A1D23;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+/* Warranty */
+.bar-bg {
+  width:100%;
+  height:10px;
+  background:#2A2E36;
+  border-radius:999px;
+  overflow:hidden;
+}
+.bar {
+  height:100%;
+  border-radius:999px;
+}
+
+/* Footer */
+.footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#0F1115;
+  padding:12px;
+}
+.btn {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  background:#06C755;
+  color:#fff;
+}
+
+/* Toast */
+.toast {
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#333;
+  padding:10px 16px;
+  border-radius:20px;
+  font-size:12px;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="plate" onclick="toggleCars()">
+      ABC-1234 ⌄
+    </div>
+    <div class="vid">VID-000123</div>
+    <div class="status">已完工</div>
+
+    <!-- 綁定按鈕（只在LINE顯示） -->
+    <button id="bindBtn" style="margin-top:8px;display:none;">
+      📱 綁定我的LINE
+    </button>
+  </div>
+
+  <!-- 車輛資訊 -->
+  <div class="card">
+    車型：Model Y<br>
+    顏色：白<br>
+    最近維護：2025-08-15
+  </div>
+
+  <!-- Warranty -->
+  <div id="warranty"></div>
+
+  <!-- Timeline -->
+  <div class="card">
+    <div>2025-06-10</div>
+    <div>全車 PPF 完工</div>
+    <div style="font-size:12px;color:#aaa;">A123456 陳**</div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <button class="btn">立即預約 LINE 客服</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  請使用 LINE 掃描 QR Code 才可綁定
+</div>
+
+<script>
+
+// ===== Mock Data =====
+const data = {
+  warranty: [
+    {name:"PPF", area:"前保", ratio:0.3},
+    {name:"鍍膜", area:"全車", ratio:0.15},
+    {name:"側裙", area:"", ratio:0}
+  ]
+};
+
+// ===== Render Warranty =====
+function getColor(r){
+  if(r <= 0) return "#E53935";
+  if(r <= 1/7) return "#E53935";
+  if(r <= 1/5) return "#FB8C00";
+  if(r <= 1/3) return "#C0CA33";
+  if(r <= 2/3) return "#66BB6A";
+  return "#00E676";
+}
+
+function renderWarranty(){
+  const el = document.getElementById("warranty");
+  el.innerHTML = "";
+
+  data.warranty
+    .sort((a,b)=>a.ratio-b.ratio)
+    .forEach(w => {
+      const percent = Math.round(w.ratio*100);
+
+      const div = document.createElement("div");
+      div.className="card";
+
+      div.innerHTML = `
+        <div>${w.name}</div>
+        <div style="font-size:12px;color:#aaa">${w.area}</div>
+        <div class="bar-bg">
+          <div class="bar" style="width:${percent}%;background:${getColor(w.ratio)}"></div>
+        </div>
+        <div style="font-size:12px">${percent}%</div>
+      `;
+
+      el.appendChild(div);
+    });
+}
+
+renderWarranty();
+
+// ===== LINE 判斷 =====
+function isLine(){
+  return navigator.userAgent.includes("Line");
+}
+
+// ===== 綁定按鈕控制 =====
+if(isLine()){
+  document.getElementById("bindBtn").style.display="block";
+}else{
+  showToast();
+}
+
+// ===== Toast =====
+function showToast(){
+  const t = document.getElementById("toast");
+  t.style.display="block";
+  setTimeout(()=>t.style.display="none",3000);
+}
+
+// ===== 切車（先佔位）=====
+function toggleCars(){
+  alert("未來這裡做切車");
+}
+
+// ===== 綁定（先佔位）=====
+document.getElementById("bindBtn").onclick = function(){
+  alert("這裡之後接 LIFF 綁定");
+}
+
+</script>
+
+</body>
+</html>
