@@ -195,14 +195,17 @@ body {
 .toast {
   position:fixed;
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-50%) translateY(-10px);  /* 🔥 預設往上 */
 
-  top: 90px;   /* 🔥 稍微再高一點，避開Logo呼吸區 */
+  opacity: 0;
+  visibility: hidden;   /* 🔥 用這個取代 display:none */
+
+  top: 91px;
   bottom: auto;
 
   padding:10px 16px;
 
-  background: rgba(20,22,28,0.55);   /* 🔥 改成品牌黑灰 */
+  background: rgba(20,22,28,0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
@@ -211,18 +214,19 @@ body {
 
   color: rgba(255,255,255,0.85);
 
-  border:1px solid rgba(255,255,255,0.08);  /* 🔥 加邊框質感 */
+  border:1px solid rgba(255,255,255,0.08);
 
   box-shadow:
     0 8px 30px rgba(0,0,0,0.6),
     0 0 10px rgba(255,255,255,0.05) inset;
 
-  display:none;
+  transition: all 0.4s ease;
 }
 
 .toast.show {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);  /* 🔥 微上浮 */
 }
   
   @keyframes blink {
@@ -599,15 +603,10 @@ function showToast(msg){
   const t = document.getElementById("toast");
   t.innerText = msg;
 
-  t.style.display = "block";
-
-  setTimeout(() => {
-    t.classList.add("show");
-  }, 10);
+  t.classList.add("show");
 
   setTimeout(() => {
     t.classList.remove("show");
-    setTimeout(()=> t.style.display="none",300);
   }, 3000);
 }
   
