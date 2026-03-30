@@ -52,18 +52,32 @@ body {
 
 /* Card */卡片樣式
 .card {
-  background:rgba(26,29,35,0.55);   /* 🔥 更透明 */
-  backdrop-filter: blur(10px);       /* 🔥 更柔 */
-  -webkit-backdrop-filter: blur(10px); /* iPhone 支援 */
+  background:rgba(20,22,28,0.75);   /* 🔥 加深一點 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   border-radius:14px;
   padding:16px;
-  margin-bottom:12px;
+  margin-bottom:16px;
 
-  border:1px solid rgba(255,255,255,0.08); /* 🔥 玻璃邊框 */
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border:1px solid rgba(255,255,255,0.12); /* 🔥 邊框更明顯 */
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.6),   /* 🔥 深陰影 */
+    0 0 0 1px rgba(255,255,255,0.05) inset; /* 🔥 內光 */
 }
 
+  .card {
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px) scale(1.01);
+
+  box-shadow: 
+    0 16px 40px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(255,255,255,0.08) inset;
+}
+  
 /* Warranty */
 .bar-bg {
   width:100%;
@@ -122,12 +136,19 @@ body {
   animation: blink 1s infinite;
   box-shadow: 0 0 8px #E53935;
 }
+
+.main {
+  background:rgba(0,0,0,0.3);
+  border-radius:20px;
+  padding:16px;
+}
+  
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="container main">
 <!--logo -->
   <div class="brand">
     <img src="IMG_2685.png">
