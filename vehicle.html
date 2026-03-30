@@ -50,7 +50,7 @@ body {
   color:#00E676;
 }
 
-/* Card */卡片樣式
+/* Card卡片樣式 */
 .card {
   background:rgba(20,22,28,0.75);   /* 🔥 加深一點 */
   backdrop-filter: blur(12px);
@@ -66,8 +66,14 @@ body {
     0 0 0 1px rgba(255,255,255,0.05) inset; /* 🔥 內光 */
 }
 
-  .card {
+/* Card卡片浮起 */
+.card {
   transition: all 0.25s ease;
+}
+
+/* Card卡片點擊沉下 */
+.card:active {
+  transform: scale(0.98);
 }
 
 .card:hover {
