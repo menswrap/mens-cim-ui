@@ -146,7 +146,7 @@ body {
 }
 
 /* Footer */
-.footer {
+.cta-bar {
   position:fixed;
   bottom:0;
   left:0;
@@ -154,6 +154,31 @@ body {
   background:#0F1115;
   padding:12px;
 }
+  
+.footer-cn {
+  font-size:12px;
+  color:#fff;
+  letter-spacing:1px;
+}
+
+.footer-en {
+  font-size:11px;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:2px;
+  margin-top:4px;
+}
+
+.footer-meta {
+  font-size:11px;
+  color:#aaa;
+  line-height:1.6;
+}
+
+.footer-powered {
+  font-size:10px;
+  color:rgba(255,255,255,0.35);
+}
+  
 .btn {
   width:100%;
   padding:14px;
@@ -191,6 +216,7 @@ body {
   background:rgba(0,0,0,0.1);
   border-radius:20px;
   padding:16px;
+  padding-bottom:100px;
 
   margin-top:40px;
 }
@@ -266,36 +292,40 @@ body {
 }
   
 .brand-slogan {
-  margin-top:18px;
+  margin-top:20px;
   text-align:center;
   line-height:1.6;
+
+  opacity:0;
+  transform: translateY(12px);
+  animation: sloganFade 1.2s ease forwards;
+  animation-delay: 0.8s; /* 🔥 重點：晚一點出現 */
+}
+
+@keyframes sloganFade {
+  to {
+    opacity:0.85;
+    transform: translateY(0);
+  }
 }
 
 /* 第一行（品牌） */
 .brand-slogan .s1 {
-  font-size:12px;
+  font-size:11px;
   letter-spacing:2px;
-  color:rgba(255,255,255,0.5);
+  color:rgba(255,255,255,0.45);
 }
 
-/* 第二行（過渡） */
-.brand-slogan .s2 {
-  font-size:14px;
-  color:rgba(255,255,255,0.75);
-  margin-top:2px;
-}
-
-/* 第三行（主殺句🔥） */
+/* 第二行（主殺句🔥） */
 .brand-slogan .s3 {
-  font-size:18px;
+  font-size:16px; /* 18 → 16 */
   font-weight:600;
   letter-spacing:2px;
   color:#fff;
   margin-top:4px;
 
   text-shadow:
-  0 0 8px rgba(255,255,255,0.12),
-  0 0 20px rgba(255,255,255,0.05);
+    0 0 6px rgba(255,255,255,0.08);
 }
     
 .owner {
@@ -315,6 +345,13 @@ body {
 .meta {
   font-size:12px;
   color:#aaa;
+}
+
+.footer-sign {
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:rgba(255,255,255,0.35);
 }
 
   @keyframes breathe {
@@ -361,12 +398,6 @@ body {
     ABC-1234
   </div>
 
-  <div class="brand-slogan">
-  <div class="s1">曼司車體包膜</div>
-  <div class="s2">不只是專業</div>
-  <div class="s3">我們定義標準</div>
-  </div>
-
   <!-- 車主 -->
   <div class="owner">
     Owner：王先生
@@ -375,6 +406,11 @@ body {
   <!-- 車輛資訊 -->
   <div class="car-info">
     Tesla｜Model Y｜White
+  </div>
+
+  <div class="brand-slogan">
+  <div class="s1">曼司車體包膜</div>
+  <div class="s3">定義車體保護的標準</div>
   </div>
     
 </div>
@@ -405,22 +441,38 @@ body {
 </div>
 
 <div class="footer-info">
-  <div>Certified Vehicle Protection Record</div>
-  <div>曼司車體包膜專業施工履歷系統</div>
+
+  <!-- 中文主體 -->
+  <div class="footer-cn">
+    曼司車體包膜專業施工履歷系統
+  </div>
+
+  <!-- 英文輔助 -->
+  <div class="footer-en">
+    Certified Vehicle Protection Record
+  </div>
 
   <br>
 
-  <div>Issued by</div>
-  <div>MENS WRAP STUDIO</div>
-  <div>www.menswrap.com</div>
+  <div class="footer-meta">
+    Issued by MENS WRAP STUDIO<br>
+    www.menswrap.com
+  </div>
 
   <br>
 
-  <div>Powered by MENS CIM System</div>
+  <div class="footer-powered">
+    Powered by MENS CIM System
+  </div>
+
+  <div class="footer-sign">
+  Standards Defined by MENS WRAP STUDIO
+</div>
+
 </div>
   
-<!-- Footer -->
-<div class="footer">
+<!-- cta-bar 頁尾按紐-->
+<div class="cta-bar">
   <button class="btn">立即預約 LINE 客服</button>
 </div>
 
