@@ -58,8 +58,8 @@ body {
     rgba(255,255,255,0)
   ), rgba(20,22,28,0.38);
 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 
   border-radius:14px;
   padding:16px;
@@ -67,6 +67,15 @@ body {
 
   border:1px solid rgba(255,255,255,0.06);
   box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+.card:active {
+  transform: scale(0.97);
 }
   
 /* Warranty */
