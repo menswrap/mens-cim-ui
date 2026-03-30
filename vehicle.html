@@ -32,7 +32,7 @@ body {
 
 /* Header */
 .header {
-  margin: 130px auto 60px;
+  margin: 103px auto 90px;
   text-align: center;
   max-width: 520px;
 
@@ -153,6 +153,8 @@ body {
   right:0;
   background:#0F1115;
   padding:12px;
+
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
 }
   
 .footer-cn {
@@ -216,7 +218,7 @@ body {
   background:rgba(0,0,0,0.1);
   border-radius:20px;
   padding:16px;
-  padding-bottom:100px;
+  padding-bottom:149px;
 
   margin-top:40px;
 }
@@ -369,6 +371,12 @@ body {
     transform: scale(1);
     opacity: 0.9;
     filter: brightness(0.91);
+  }
+}
+
+  @media (max-width: 768px) {
+  .header {
+    margin: 80px auto 90px;
   }
 }
   
