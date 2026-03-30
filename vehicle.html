@@ -210,24 +210,28 @@ function renderWarranty(){
       div.className="card";
 
       div.innerHTML = `
-  <div style="font-weight:600">${w.name} ${w.area ? `（${w.area}）` : ""}</div>
+  <div style="font-weight:600;font-size:15px;">
+    ${w.name} ${w.area ? `（${w.area}）` : ""}
+  </div>
 
-<div style="font-size:12px;color:#aaa;margin-top:4px;">
-  ${w.brand || ""} ${w.series || ""} ${w.material || ""}
-</div>
+  <div style="font-size:13px;color:#ccc;margin-top:4px;">
+    ${w.brand ? w.brand : ""} 
+    ${w.series ? "｜" + w.series : ""} 
+    ${w.material ? "｜" + w.material : ""}
+  </div>
 
-<div style="font-size:11px;color:#666;">
-  ${w.batch ? `Batch: ${w.batch}` : ""}
-</div>
+  <div style="font-size:12px;color:#999;margin-bottom:8px;">
+    ${w.batch ? `Batch: ${w.batch}` : ""}
+  </div>
 
   <div class="bar-bg" style="border:1px solid ${borderColor}">
-  <div class="bar ${dangerClass}" 
-     style="width:${percent}%;background:${getColor(w.ratio)}">
-</div>
-</div>
+    <div class="bar ${dangerClass}" 
+         style="width:${percent}%;background:${getColor(w.ratio)}">
+    </div>
+  </div>
 
-  <div style="font-size:12px">${percent}%</div>
-  `;
+  <div style="font-size:12px;margin-top:4px;">${percent}%</div>
+`;
 
       el.appendChild(div);
     });
