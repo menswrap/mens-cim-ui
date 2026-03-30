@@ -199,6 +199,62 @@ body {
   margin:40px 0 80px;
   line-height:1.6;
 }
+
+/* 🔥 Header Ferrari版 */
+.brand-hero {
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.brand-hero img {
+  height:42px;
+}
+
+.brand-name {
+  font-size:14px;
+  font-weight:600;
+  margin-top:4px;
+  letter-spacing:1px;
+}
+
+.brand-sub {
+  font-size:11px;
+  color:#aaa;
+}
+
+.plate-big {
+  text-align:center;
+  font-size:34px;
+  font-weight:700;
+  margin-top:10px;
+  letter-spacing:2px;
+}
+
+.owner {
+  text-align:center;
+  font-size:12px;
+  color:#bbb;
+  margin-top:6px;
+}
+
+.car-info {
+  text-align:center;
+  font-size:13px;
+  margin-top:4px;
+  letter-spacing:1px;
+}
+
+.info-row {
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.meta {
+  font-size:12px;
+  color:#aaa;
+}
   
 </style>
 </head>
@@ -218,29 +274,41 @@ body {
 </div>
 
   <!-- Header -->
- <div class="header">
-  <div class="plate-row">
-    <div class="plate" onclick="toggleCars()">
-      ABC-1234 ⌄
-    </div>
-    <div class="status">已完工</div>
+<div class="header">
+
+  <!-- 品牌主體 -->
+  <div class="brand-hero">
+    <img src="IMG_2685.png">
+    <div class="brand-name">MENS WRAP STUDIO</div>
+    <div class="brand-sub">Vehicle Protection Record</div>
   </div>
 
-  <div class="sub-info">
-    <div class="vid">VID-000123</div>
-    <div class="maintain">最近維護：2025-08-15</div>
+  <!-- 車牌 -->
+  <div class="plate-big">
+    ABC-1234
+  </div>
+
+  <!-- 車主 -->
+  <div class="owner">
+    Owner：王先生
+  </div>
+
+  <!-- 車輛資訊 -->
+  <div class="car-info">
+    Tesla｜Model Y｜White
+  </div>
+
+  <!-- 狀態 -->
+  <div class="info-row">
+    <div class="status">已完工</div>
+    <div class="meta">VID-000123</div>
   </div>
 
   <!-- 綁定按鈕 -->
-  <button id="bindBtn" style="margin-top:8px;display:none;">
+  <button id="bindBtn" style="margin-top:10px;display:none;">
     📱 綁定我的LINE
   </button>
-</div>
 
-  <!-- 車輛資訊 -->
-  <div class="card">
-  車型：Model Y<br>
-  顏色：白
 </div>
 
   <!-- Warranty -->
