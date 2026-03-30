@@ -173,9 +173,14 @@ body {
 // ===== Mock Data =====
 const data = {
   warranty: [
-    {name:"PPF", area:"前保", ratio:0.3},
-    {name:"鍍膜", area:"全車", ratio:0.15},
-    {name:"側裙", area:"", ratio:0}
+    {name:"PPF", area:"前保", ratio:0.3,
+ brand:"SunTek", series:"ONE", material:"PPF（5年保固）", batch:"32096009"},
+
+{name:"鍍膜", area:"全車", ratio:0.15,
+ brand:"CarPro", series:"", material:"鍍膜（1.5年）", batch:"MPC BASIC"},
+
+{name:"側裙", area:"", ratio:0,
+ brand:"", series:"", material:"", batch:""}
   ]
 };
 
@@ -204,7 +209,15 @@ function renderWarranty(){
 
       div.innerHTML = `
   <div>${w.name}</div>
-  <div style="font-size:12px;color:#aaa">${w.area}</div>
+  <div style="font-weight:600">${w.name} ${w.area ? `（${w.area}）` : ""}</div>
+
+<div style="font-size:12px;color:#aaa;margin-top:4px;">
+  ${w.brand || ""} ${w.series || ""} ${w.material || ""}
+</div>
+
+<div style="font-size:11px;color:#666;">
+  ${w.batch ? `Batch: ${w.batch}` : ""}
+</div>
 
   <div class="bar-bg" style="border:1px solid ${borderColor}">
   <div class="bar ${dangerClass}" 
