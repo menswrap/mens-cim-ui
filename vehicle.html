@@ -567,14 +567,20 @@ function isLine(){
 if(isLine()){
   document.getElementById("bindBtn").style.display="block";
 }else{
-  showToast();
+  setTimeout(() => {
+    showToast("請使用 LINE 掃描 QR Code 才可綁定");
+  }, 2500);   // 🔥 延遲出現
 }
 
 // ===== Toast =====
-function showToast(){
+function showToast(msg){
   const t = document.getElementById("toast");
+  t.innerText = msg;
   t.style.display="block";
-  setTimeout(()=>t.style.display="none",3000);
+
+  setTimeout(()=>{
+    t.style.display="none";
+  },3000);
 }
   
 // ===== 切車（先佔位）=====
