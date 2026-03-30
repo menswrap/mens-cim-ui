@@ -55,20 +55,9 @@ body {
 
 /* Header */
 .header {
-  margin: 0 auto 20px;
-  padding: 20px 16px;
-
-  max-width: 420px;
-
+  margin: 80px auto 40px;
   text-align: center;
-
-  background: rgba(0,0,0,0.25);
-  border-radius: 20px;
-
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  border:1px solid rgba(255,255,255,0.08);
+  max-width: 520px;
 }
 
 .info-center {
@@ -90,7 +79,14 @@ body {
   color:#aaa;
 }
 .status {
+  display:inline-block;
+  margin-top:8px;
+
   font-size:12px;
+  padding:4px 10px;
+
+  border-radius:20px;
+  background:rgba(0,230,118,0.15);
   color:#00E676;
 }
 
@@ -182,9 +178,11 @@ body {
 }
 
 .main {
-  background:rgba(0,0,0,0.15);  /* 🔥 原本0.3 → 改0.15 */
+  background:rgba(0,0,0,0.1);
   border-radius:20px;
   padding:16px;
+
+  margin-top:40px;
 }
 
 /* Header強化 */
@@ -228,6 +226,8 @@ body {
 .brand-hero {
   text-align:center;
   margin-bottom:10px;
+
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8));
 }
 
 .brand-hero img {
@@ -249,10 +249,14 @@ body {
 
 .plate-big {
   text-align:center;
-  font-size:40px;
+  font-size:46px;
   font-weight:700;
-  margin-top:10px;
-  letter-spacing:3px;
+  margin-top:12px;
+  letter-spacing:4px;
+
+  text-shadow:
+    0 4px 20px rgba(0,0,0,0.8),
+    0 0 10px rgba(255,255,255,0.1);
 }
 
 .owner {
