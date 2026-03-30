@@ -62,6 +62,23 @@ body {
   position: relative;
 }
 
+.hero-card {
+  padding:30px 20px;
+
+  border-radius:20px;
+
+  background: rgba(0,0,0,0.25);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 40px rgba(255,255,255,0.03) inset;
+}
+
 .header::before {
   content:"";
   position:absolute;
@@ -118,7 +135,7 @@ body {
     to bottom,
     rgba(255,255,255,0.05),
     rgba(255,255,255,0)
-  ), rgba(20,22,28,0.38);
+  ), rgba(20,22,28,0.35);
 
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
@@ -269,16 +286,34 @@ body {
   color:#aaa;
 }
 
+.cert-title {
+  font-size:12px;
+  letter-spacing:2px;
+  color:#aaa;
+  margin-bottom:8px;
+}
+  
 .plate-big {
   text-align:center;
-  font-size:46px;
+  font-size:48px;
   font-weight:700;
   margin-top:12px;
-  letter-spacing:4px;
+  letter-spacing:5px;
+
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f5f5f5 40%,
+    #dcdcdc 60%,
+    #ffffff 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   text-shadow:
     0 4px 20px rgba(0,0,0,0.8),
-    0 0 10px rgba(255,255,255,0.1);
+    0 0 10px rgba(255,255,255,0.08);
 }
 
 .owner {
@@ -316,6 +351,7 @@ body {
   
   <!-- Header -->
 <div class="header">
+  <div class="hero-card">
 
   <!-- 品牌主體 -->
   <div class="brand-hero">
@@ -324,6 +360,10 @@ body {
     <div class="brand-sub">Vehicle Protection Record</div>
   </div>
 
+<div class="cert-title">
+  Certified Vehicle Protection Record
+</div>
+    
   <!-- 車牌 -->
   <div class="plate-big">
     ABC-1234
@@ -338,6 +378,8 @@ body {
   <div class="car-info">
     Tesla｜Model Y｜White
   </div>
+    
+</div>
 
   <!-- 狀態 -->
   <div class="info-center">
