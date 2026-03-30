@@ -55,8 +55,32 @@ body {
 
 /* Header */
 .header {
-  margin-bottom:16px;
+  margin: 0 auto 20px;
+  padding: 20px 16px;
+
+  max-width: 420px;
+
+  text-align: center;
+
+  background: rgba(0,0,0,0.25);
+  border-radius: 20px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border:1px solid rgba(255,255,255,0.08);
 }
+
+.info-center {
+  margin-top:10px;
+}
+
+.info-center .meta {
+  font-size:12px;
+  color:#aaa;
+  margin-top:4px;
+}
+  
 .plate {
   font-size:28px;
   font-weight:bold;
@@ -207,7 +231,8 @@ body {
 }
 
 .brand-hero img {
-  height:42px;
+  height:36px;
+  opacity:0.85;
 }
 
 .brand-name {
@@ -224,10 +249,10 @@ body {
 
 .plate-big {
   text-align:center;
-  font-size:34px;
+  font-size:40px;
   font-weight:700;
   margin-top:10px;
-  letter-spacing:2px;
+  letter-spacing:3px;
 }
 
 .owner {
@@ -262,17 +287,7 @@ body {
 <body>
 
 <div class="container main">
-<!--logo -->
-  <div class="brand">
-  <img src="IMG_2685.png">
-
-  <div class="brand-text">
-    <div class="brand-title">曼司車體包膜</div>
-    <div class="brand-sub">Vehicle Protection Record</div>
-    <div class="brand-sub2">車輛包膜施工履歷</div>
-  </div>
-</div>
-
+  
   <!-- Header -->
 <div class="header">
 
@@ -299,10 +314,10 @@ body {
   </div>
 
   <!-- 狀態 -->
-  <div class="info-row">
-    <div class="status">已完工</div>
-    <div class="meta">VID-000123</div>
-  </div>
+  <div class="info-center">
+  <div class="status">已完工</div>
+  <div class="meta">VID-000123</div>
+</div>
 
   <!-- 綁定按鈕 -->
   <button id="bindBtn" style="margin-top:10px;display:none;">
