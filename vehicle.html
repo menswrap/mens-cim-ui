@@ -24,14 +24,34 @@ body {
 .container { padding:16px; }
 
 .brand {
-  margin-bottom:12px;
+  margin-bottom:16px;
 }
 
 .brand img {
-  height:34px;
-  opacity:1;
+  height:49px;
+  opacity:0.95;
   filter: drop-shadow(0 0 6px rgba(0,0,0,0.6));
 }
+
+.brand-text {
+  margin-top:6px;
+}
+
+.brand-title {
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+.brand-sub {
+  font-size:11px;
+  color:#aaa;
+}
+
+.brand-sub2 {
+  font-size:11px;
+  color:#666;
+}  
 
 /* Header */
 .header {
@@ -142,6 +162,43 @@ body {
   border-radius:20px;
   padding:16px;
 }
+
+/* Header強化 */
+.plate-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.plate {
+  font-size:30px;  /* 🔥放大 */
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.status {
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:20px;
+  background:rgba(0,230,118,0.15);
+  color:#00E676;
+}
+
+.sub-info {
+  margin-top:6px;
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:#aaa;
+}
+
+.footer-info {
+  text-align:center;
+  font-size:11px;
+  color:#888;
+  margin:40px 0 80px;
+  line-height:1.6;
+}
   
 </style>
 </head>
@@ -151,29 +208,40 @@ body {
 <div class="container main">
 <!--logo -->
   <div class="brand">
-    <img src="IMG_2685.png">
+  <img src="IMG_2685.png">
+
+  <div class="brand-text">
+    <div class="brand-title">曼司車體包膜</div>
+    <div class="brand-sub">Vehicle Protection Record</div>
+    <div class="brand-sub2">車輛包膜施工履歷</div>
   </div>
+</div>
 
   <!-- Header -->
-  <div class="header">
+ <div class="header">
+  <div class="plate-row">
     <div class="plate" onclick="toggleCars()">
       ABC-1234 ⌄
     </div>
-    <div class="vid">VID-000123</div>
     <div class="status">已完工</div>
-
-    <!-- 綁定按鈕（只在LINE顯示） -->
-    <button id="bindBtn" style="margin-top:8px;display:none;">
-      📱 綁定我的LINE
-    </button>
   </div>
+
+  <div class="sub-info">
+    <div class="vid">VID-000123</div>
+    <div class="maintain">最近維護：2025-08-15</div>
+  </div>
+
+  <!-- 綁定按鈕 -->
+  <button id="bindBtn" style="margin-top:8px;display:none;">
+    📱 綁定我的LINE
+  </button>
+</div>
 
   <!-- 車輛資訊 -->
   <div class="card">
-    車型：Model Y<br>
-    顏色：白<br>
-    最近維護：2025-08-15
-  </div>
+  車型：Model Y<br>
+  顏色：白
+</div>
 
   <!-- Warranty -->
   <div id="warranty"></div>
@@ -187,6 +255,21 @@ body {
 
 </div>
 
+<div class="footer-info">
+  <div>Certified Vehicle Protection Record</div>
+  <div>曼司車體包膜專業施工履歷系統</div>
+
+  <br>
+
+  <div>Issued by</div>
+  <div>MENS WRAP STUDIO</div>
+  <div>www.menswrap.com</div>
+
+  <br>
+
+  <div>Powered by MENS CIM System</div>
+</div>
+  
 <!-- Footer -->
 <div class="footer">
   <button class="btn">立即預約 LINE 客服</button>
