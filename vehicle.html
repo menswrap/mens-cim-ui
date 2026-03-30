@@ -52,18 +52,21 @@ body {
 
 /* Card卡片樣式 */
 .card {
-  background:rgba(20,22,28,0.75);   /* 🔥 加深一點 */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0)
+  ), rgba(20,22,28,0.45);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   border-radius:14px;
   padding:16px;
   margin-bottom:16px;
 
-  border:1px solid rgba(255,255,255,0.12); /* 🔥 邊框更明顯 */
-  box-shadow: 
-    0 10px 30px rgba(0,0,0,0.6),   /* 🔥 深陰影 */
-    0 0 0 1px rgba(255,255,255,0.05) inset; /* 🔥 內光 */
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
 
 /* Card卡片浮起 */
@@ -71,8 +74,7 @@ body {
   transition: all 0.25s ease;
 }
 
-.card:hover {
-  transform: translateY(-3px) scale(1.01);
+
 
   box-shadow: 
     0 16px 40px rgba(0,0,0,0.75),
