@@ -460,13 +460,7 @@ body {
 
   <!-- Warranty -->
   <div id="warranty"></div>
-
-  <!-- Timeline -->
-  <div class="card">
-    <div>2025-06-10</div>
-    <div>全車 PPF 完工</div>
-    <div style="font-size:12px;color:#aaa;">A123456 陳**</div>
-  </div>
+  <div id="timeline"></div>
 
 </div>
 
@@ -515,7 +509,7 @@ body {
 
 // ===== Mock Data =====
 const mockData = {
-  plate: "ABC-1234",
+  plate: "ABC-5678",
   brand: "Tesla",
   model: "Model Y",
   color: "White",
@@ -545,38 +539,34 @@ function renderWarranty(materials){
   const el = document.getElementById("warranty");
   el.innerHTML = "";
 
-  data.warranty
-    .sort((a,b)=>a.ratio-b.ratio)
+  materials
+    .sort((a,b)=>a.bar - b.bar)
     .forEach(w => {
-      materials
-      const dangerClass = w.ratio <= 0 ? "danger" : "";
-      const borderColor = getBorderColor(w.ratio); // 🔥加這行
+
+      const percent = w.bar;
+      const dangerClass = percent <= 0 ? "danger" : "";
+      const borderColor = getBorderColor(percent/100);
+
       const div = document.createElement("div");
       div.className="card";
 
       div.innerHTML = `
-  <div style="font-weight:600;font-size:15px;">
-    ${w.name} ${w.area ? `（${w.area}）` : ""}
-  </div>
+        <div style="font-weight:600;font-size:15px;">
+          ${w.name} ${w.part ? `（${w.part}）` : ""}
+        </div>
 
-  <div style="font-size:13px;color:#ccc;margin-top:4px;">
-    ${w.brand ? w.brand : ""} 
-    ${w.series ? "｜" + w.series : ""} 
-    ${w.material ? "｜" + w.material : ""}
-  </div>
+        <div style="font-size:12px;color:#999;margin-bottom:8px;">
+          ${w.batch ? `Batch: ${w.batch}` : ""}
+        </div>
 
-  <div style="font-size:12px;color:#999;margin-bottom:8px;">
-    ${w.batch ? `Batch: ${w.batch}` : ""}
-  </div>
+        <div class="bar-bg" style="border:1px solid ${borderColor}">
+          <div class="bar ${dangerClass}" 
+               style="width:${percent}%;background:${getColor(percent/100)}">
+          </div>
+        </div>
 
-  <div class="bar-bg" style="border:1px solid ${borderColor}">
-    <div class="bar ${dangerClass}" 
-         style="width:${percent}%;background:${getColor(w.ratio)}">
-    </div>
-  </div>
-
-  <div style="font-size:12px;margin-top:4px;">${percent}%</div>
-`;
+        <div style="font-size:12px;margin-top:4px;">${percent}%</div>
+      `;
 
       el.appendChild(div);
     });
@@ -588,6 +578,27 @@ window.onload = function(){
   renderTimeline(mockData.works);
 };
 
+function renderTimeline(works){
+
+  const container = document.getElementById("timeline");
+
+  document.querySelectorAll(".timeline-item").forEach(e=>e.remove());
+
+  works.forEach(w => {
+
+    const div = document.createElement("div");
+    div.className = "card timeline-item";
+
+    div.innerHTML = `
+      <div>${w.date}</div>
+      <div>${w.item}</div>
+      <div style="font-size:12px;color:#aaa">${w.tech}</div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+  
 // ===== LINE 判斷 =====
 function isLine(){
   return navigator.userAgent.includes("Line");
@@ -639,48 +650,6 @@ function getBorderColor(r){
 document.getElementById("bindBtn").onclick = function(){
   alert("這裡之後接 LIFF 綁定");
 }
-
-  // ===== 假資料 =====
-  const mockData = {
-  plate: "ABC-1234",
-  brand: "Tesla",
-  model: "Model Y",
-  color: "White",
-
-  materials: [
-    {
-      name: "XPEL｜Ultimate Plus｜PPF（10年保固）",
-      part: "前保",
-      batch: "XP12345",
-      bar: 75
-    },
-    {
-      name: "GYEON｜鍍膜｜MOHS（3年保固）",
-      part: "全車",
-      batch: "",
-      bar: 40
-    },
-    {
-      name: "3M｜側裙膜｜PPF（5年保固）",
-      part: "側裙",
-      batch: "",
-      bar: 10
-    }
-  ],
-
-  works: [
-    {
-      date: "2025-06-10",
-      item: "全車 PPF 完工",
-      tech: "A123456 陳**"
-    },
-    {
-      date: "2025-08-01",
-      item: "年度檢查",
-      tech: "A123456 陳**"
-    }
-  ]
-};
   
 </script>
 
