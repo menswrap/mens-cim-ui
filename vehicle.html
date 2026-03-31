@@ -556,9 +556,13 @@ function renderWarranty(materials){
 
 function renderTimeline(works){
 
-  const container = document.getElementById("timeline");
+  if(!works || works.length === 0){
+    console.log("⚠️ timeline 沒資料");
+    return;
+  }
 
-  document.querySelectorAll(".timeline-item").forEach(e=>e.remove());
+  const container = document.getElementById("timeline");
+  container.innerHTML = ""; // 🔥 建議這樣清
 
   works.forEach(w => {
 
@@ -566,10 +570,10 @@ function renderTimeline(works){
     div.className = "card timeline-item";
 
     div.innerHTML = `
-      <div>${w.date}</div>
-      <div>${w.item}</div>
-      <div style="font-size:12px;color:#aaa">${w.tech}</div>
-    `;
+  <div>${formatDate(w.date)}</div>
+  <div>${w.item}</div>
+  <div style="font-size:12px;color:#aaa">${w.tech}</div>
+`;
 
     container.appendChild(div);
   });
@@ -650,6 +654,18 @@ function handleData(data){
 
   // 🔥 時間軸
   renderTimeline(data.works || []);
+}
+
+function formatDate(d){
+  if(!d) return "";
+
+  const date = new Date(d);
+
+  if(isNaN(date.getTime())) return d;
+
+  return date.getFullYear() + "/" + 
+         (date.getMonth()+1) + "/" + 
+         date.getDate();
 }
   
 // ===== 測試資料 =====
