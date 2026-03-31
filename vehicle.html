@@ -428,9 +428,7 @@ body {
 </div>
     
   <!-- 車牌 -->
-  <div class="plate-big">
-    ABC-1234
-  </div>
+  <div class="plate-big"></div>
 
   <!-- 車主 -->
   <div class="owner">
@@ -438,9 +436,7 @@ body {
   </div>
 
   <!-- 車輛資訊 -->
-  <div class="car-info">
-    Tesla｜Model Y｜White
-  </div>
+ <div class="car-info"></div>
 
   <div class="brand-slogan">
   <div class="s1">曼司車體包膜</div>
@@ -518,16 +514,20 @@ body {
 <script>
 
 // ===== Mock Data =====
-const data = {
-  warranty: [
-    {name:"PPF", area:"前保", ratio:0.3,
- brand:"SunTek", series:"ONE", material:"PPF（5年保固）", batch:"32096009"},
+const mockData = {
+  plate: "ABC-1234",
+  brand: "Tesla",
+  model: "Model Y",
+  color: "White",
 
-{name:"鍍膜", area:"全車", ratio:0.15,
- brand:"CarPro", series:"", material:"鍍膜（1.5年）", batch:"MPC BASIC"},
+  materials: [
+    { name:"PPF", part:"前保", batch:"XP123", bar:30 },
+    { name:"鍍膜", part:"全車", batch:"", bar:15 },
+    { name:"側裙", part:"", batch:"", bar:0 }
+  ],
 
-{name:"側裙", area:"", ratio:0,
- brand:"", series:"", material:"", batch:""}
+  works: [
+    { date:"2025-06-10", item:"全車 PPF 完工", tech:"A123456 陳**" }
   ]
 };
 
@@ -541,14 +541,14 @@ function getColor(r){
   return "#00E676";
 }
 
-function renderWarranty(){
+function renderWarranty(materials){
   const el = document.getElementById("warranty");
   el.innerHTML = "";
 
   data.warranty
     .sort((a,b)=>a.ratio-b.ratio)
     .forEach(w => {
-      const percent = Math.max(5, Math.round(w.ratio*100));
+      materials
       const dangerClass = w.ratio <= 0 ? "danger" : "";
       const borderColor = getBorderColor(w.ratio); // 🔥加這行
       const div = document.createElement("div");
@@ -582,7 +582,11 @@ function renderWarranty(){
     });
 }
 
-renderWarranty();
+window.onload = function(){
+  renderVehicle(mockData);
+  renderWarranty(mockData.materials);
+  renderTimeline(mockData.works);
+};
 
 // ===== LINE 判斷 =====
 function isLine(){
@@ -615,6 +619,14 @@ function toggleCars(){
   alert("未來這裡做切車");
 }
 
+function renderVehicle(data){
+
+document.querySelector(".plate-big").innerText = data.plate;
+
+document.querySelector(".car-info").innerText =
+    `${data.brand}｜${data.model}｜${data.color}`;
+}
+
 // ===== 血條外框 =====  
 function getBorderColor(r){
   if(r <= 0) return "#E53935";     // 過期
@@ -628,6 +640,48 @@ document.getElementById("bindBtn").onclick = function(){
   alert("這裡之後接 LIFF 綁定");
 }
 
+  // ===== 假資料 =====
+  const mockData = {
+  plate: "ABC-1234",
+  brand: "Tesla",
+  model: "Model Y",
+  color: "White",
+
+  materials: [
+    {
+      name: "XPEL｜Ultimate Plus｜PPF（10年保固）",
+      part: "前保",
+      batch: "XP12345",
+      bar: 75
+    },
+    {
+      name: "GYEON｜鍍膜｜MOHS（3年保固）",
+      part: "全車",
+      batch: "",
+      bar: 40
+    },
+    {
+      name: "3M｜側裙膜｜PPF（5年保固）",
+      part: "側裙",
+      batch: "",
+      bar: 10
+    }
+  ],
+
+  works: [
+    {
+      date: "2025-06-10",
+      item: "全車 PPF 完工",
+      tech: "A123456 陳**"
+    },
+    {
+      date: "2025-08-01",
+      item: "年度檢查",
+      tech: "A123456 陳**"
+    }
+  ]
+};
+  
 </script>
 
 </body>
