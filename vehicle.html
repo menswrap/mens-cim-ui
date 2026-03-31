@@ -651,6 +651,11 @@ document.getElementById("bindBtn").onclick = function(){
   alert("這裡之後接 LIFF 綁定");
 }
 
+function getPlateFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("plate");
+}
+  
 // ===== 測試資料 =====
 async function testAPI(){
 
