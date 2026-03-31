@@ -655,19 +655,6 @@ function getPlateFromURL(){
   const params = new URLSearchParams(window.location.search);
   return params.get("plate");
 }
-  
-// ===== 測試資料 =====
-function testAPI(){
-
-  const plate = getPlateFromURL();
-
-  const url = `https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=${plate}&callback=handleData`;
-
-  const script = document.createElement("script");
-  script.src = url;
-  document.body.appendChild(script);
-
-}
 
 function handleData(data){
 
@@ -675,10 +662,61 @@ function handleData(data){
 
   if(data.error){
     console.log("錯誤:", data.error);
+    showToast("查無資料");
     return;
   }
 
+  // 🔥 主資料
   renderData(data);
+
+  // 🔥 保固
+  renderWarranty(data.materials || []);
+
+  // 🔥 時間軸
+  renderTimeline(data.works || []);
+}
+  
+// ===== 測試資料 =====
+function testAPI(){
+
+  let plate = getPlateFromURL();
+
+  // 🔥 沒帶就用測試車牌
+  if(!plate){
+    plate = "EBC5981";   // 你資料庫那台
+  }
+
+  console.log("查詢車牌:", plate);
+
+  const url = `https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=${plate}&callback=handleData`;
+
+  const script = document.createElement("script");
+  script.src = url;
+  document.body.appendChild(script);
+}
+
+}
+
+function renderData(data){
+
+  // 🔥 車牌（大字）
+  const plateEl = document.querySelector(".plate-big");
+  if(plateEl){
+    plateEl.innerText = data.plate || "---";
+  }
+
+  // 🔥 車主
+  const ownerEl = document.querySelector(".owner");
+  if(ownerEl){
+    ownerEl.innerText = "Owner："+(data.owner || "---");
+  }
+
+  // 🔥 車輛資訊
+  const carEl = document.querySelector(".car-info");
+  if(carEl){
+    carEl.innerText =
+      `${data.brand || ""}｜${data.model || ""}｜${data.color || ""}`;
+  }
 
 }
   
@@ -705,6 +743,10 @@ async function loadData(){
     showToast("資料讀取失敗");
   }
 }
+
+window.onload = function(){
+  testAPI();   // 🔥 這行才是真正啟動
+};
   
 </script>
 
