@@ -554,12 +554,6 @@ function renderWarranty(materials){
     });
 }
 
-window.onload = function(){
-  renderVehicle(mockData);
-  renderWarranty(mockData.materials);
-  renderTimeline(mockData.works);
-};
-
 function renderTimeline(works){
 
   const container = document.getElementById("timeline");
@@ -675,8 +669,6 @@ function testAPI(){
   const script = document.createElement("script");
   script.src = url;
   document.body.appendChild(script);
-}
-
 }
 
 function renderData(data){
