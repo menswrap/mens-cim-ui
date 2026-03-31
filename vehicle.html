@@ -650,6 +650,50 @@ function getBorderColor(r){
 document.getElementById("bindBtn").onclick = function(){
   alert("這裡之後接 LIFF 綁定");
 }
+
+// ===== 測試資料 =====
+async function testAPI(){
+
+  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=ABC-5678";
+
+  try{
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log("API回傳", data);
+
+    renderVehicle(data);
+    renderWarranty(data.materials);
+    renderTimeline(data.works);
+
+  }catch(err){
+    console.error("API錯誤", err);
+  }
+}
+  
+// ===== 讀資料 =====
+async function loadData(){
+
+  // 🔥 之後這裡會動態帶車牌（先寫死測試）
+  const plate = "ABC-5678";
+
+  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=" + plate;
+
+  try{
+    const res = await fetch(url);
+    const data = await res.json();
+
+    console.log("API資料：", data);
+
+    renderVehicle(data);
+    renderWarranty(data.materials);
+    renderTimeline(data.works);
+
+  }catch(err){
+    console.error("讀取失敗", err);
+    showToast("資料讀取失敗");
+  }
+}
   
 </script>
 
