@@ -507,24 +507,6 @@ body {
 
 <script>
 
-// ===== Mock Data =====
-const mockData = {
-  plate: "ABC-5678",
-  brand: "Tesla",
-  model: "Model Y",
-  color: "White",
-
-  materials: [
-    { name:"PPF", part:"前保", batch:"XP123", bar:30 },
-    { name:"鍍膜", part:"全車", batch:"", bar:15 },
-    { name:"側裙", part:"", batch:"", bar:0 }
-  ],
-
-  works: [
-    { date:"2025-06-10", item:"全車 PPF 完工", tech:"A123456 陳**" }
-  ]
-};
-
 // ===== Render Warranty =====
 function getColor(r){
   if(r <= 0) return "#E53935";
