@@ -654,21 +654,30 @@ document.getElementById("bindBtn").onclick = function(){
 // ===== 測試資料 =====
 async function testAPI(){
 
-  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=ABC-5678";
+  const plate = getPlateFromURL();
+
+  console.log("目前查詢車牌:", plate);
+
+  const url = `https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=${plate}`;
 
   try{
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log("API回傳", data);
+    console.log("API回傳:", data);
 
-    renderVehicle(data);
-    renderWarranty(data.materials);
-    renderTimeline(data.works);
+    if(data.error){
+      console.log("API錯誤:", data.error);
+      return;
+    }
+
+    // 👉 這裡才是你原本 render 的地方
+    renderData(data);
 
   }catch(err){
     console.error("API錯誤", err);
   }
+
 }
   
 // ===== 讀資料 =====
