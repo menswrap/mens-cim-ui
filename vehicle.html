@@ -340,52 +340,63 @@ body {
   line-height:1.6;
 }
 
-@keyframes sloganFlashUltra {
+@keyframes lightSweep {
 
-  /* 0️⃣ 初始 */
+  0% {
+    left: -120%;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    left: 120%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+  
+@keyframes sloganFlashFinal {
+
   0% {
     opacity: 0;
-    transform: translateY(8px);
-    filter: brightness(0.7);
-    text-shadow: 0 0 4px rgba(255,255,255,0.05);
+    transform: translateY(8px) scale(0.98);
   }
 
-  /* 1️⃣ 柔順進場 */
-  25% {
+  20% {
     opacity: 1;
-    transform: translateY(0);
-    filter: brightness(1.2);
+    transform: translateY(0) scale(1);
   }
 
-  /* 2️⃣ 🔥 爆亮（更強） */
-  45% {
-    filter: brightness(4.2);
+  /* 🔥 爆光（用 shadow，不用暴力 brightness） */
+  40% {
     text-shadow:
-      0 0 40px rgba(255,255,255,1),
-      0 0 80px rgba(255,255,255,0.7),
-      0 0 140px rgba(255,255,255,0.35);
+      0 0 25px rgba(255,255,255,1),
+      0 0 60px rgba(255,255,255,0.7),
+      0 0 120px rgba(255,255,255,0.3);
   }
 
-  /* 3️⃣ 🔥 高亮停留（拉長） */
-  60% {
-    filter: brightness(3.6);
+  /* 🔥 停留（順） */
+  55% {
     text-shadow:
-      0 0 32px rgba(255,255,255,0.95),
-      0 0 70px rgba(255,255,255,0.6);
+      0 0 20px rgba(255,255,255,0.9),
+      0 0 50px rgba(255,255,255,0.6);
   }
 
-  /* 4️⃣ ✨ 柔順殘光（關鍵！不卡） */
-  80% {
-    filter: brightness(2);
+  /* ✨ 殘光（平滑下降） */
+  75% {
     text-shadow:
-      0 0 18px rgba(255,255,255,0.45),
-      0 0 40px rgba(255,255,255,0.25);
+      0 0 12px rgba(255,255,255,0.4),
+      0 0 30px rgba(255,255,255,0.2);
   }
 
-  /* 5️⃣ 收斂（慢慢滑） */
   100% {
-    opacity: 0.95;
-    filter: brightness(1);
     text-shadow:
       0 0 6px rgba(255,255,255,0.08);
   }
@@ -406,10 +417,43 @@ body {
   color:#fff;
   margin-top:4px;
 
+  position: relative;
+  overflow: hidden;
+
+  /* 🔥 降低GPU壓力 */
+  will-change: transform, opacity;
+
   text-shadow: 0 0 6px rgba(255,255,255,0.08);
 
-  animation: sloganFlashUltra 2.6s ease-out forwards;
-  animation-delay: 0.2s;
+  animation: sloganFlashFinal 2.4s ease-out forwards;
+  animation-delay: 0.15s;
+}
+
+  /* 第二行 (掃光層） */
+.brand-slogan .s3::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.9) 45%,
+    rgba(255,255,255,0.5) 50%,
+    transparent 55%
+  );
+
+  transform: skewX(-20deg);
+
+  opacity: 0;
+  pointer-events: none;
+
+  /* 🔥 提前，對齊爆光 */
+  animation: lightSweep 1.2s ease-out forwards;
+  animation-delay: 0.6s;
 }
     
 .owner {
