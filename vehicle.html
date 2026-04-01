@@ -626,22 +626,119 @@ function renderTimeline(works){
   }
 
   const container = document.getElementById("timeline");
-  container.innerHTML = ""; // 🔥 建議這樣清
+  container.innerHTML = "";
+
+  // ===== 類型排序（固定）=====
+  const typeOrder = ["施工","維護","回檢/修補","其他"];
+
+  // ===== 分組：日期 → 類型 =====
+  const grouped = {};
 
   works.forEach(w => {
 
-    const div = document.createElement("div");
-    div.className = "card timeline-item";
+    const date = formatDate(w.date);
 
-    div.innerHTML = `
-  <div>${formatDate(w.date)}</div>
-  <div>${w.item}</div>
-  <div style="font-size:12px;color:#aaa">
-  ${getViewType().type === "tech" ? (w.techFull || w.tech) : w.tech}
-</div>
-`;
+    // 🔥 舊資料處理（空白 → 施工）
+    let type = w.type;
+    if(!type || type === ""){
+      type = "施工";
+    }
 
-    container.appendChild(div);
+    if(!grouped[date]) grouped[date] = {};
+    if(!grouped[date][type]) grouped[date][type] = [];
+
+    grouped[date][type].push(w);
+  });
+
+  // ===== 日期排序（新 → 舊）=====
+  const dates = Object.keys(grouped)
+    .sort((a,b)=> new Date(b) - new Date(a));
+
+  dates.forEach(date => {
+
+    // ===== 日期標題 =====
+    const dateEl = document.createElement("div");
+    dateEl.style.margin = "20px 0 10px";
+    dateEl.style.fontSize = "13px";
+    dateEl.style.color = "#aaa";
+    dateEl.style.letterSpacing = "1px";
+    dateEl.innerText = date;
+
+    container.appendChild(dateEl);
+
+    // ===== 類型排序 =====
+    const types = Object.keys(grouped[date])
+      .sort((a,b)=> typeOrder.indexOf(a) - typeOrder.indexOf(b));
+
+    types.forEach(type => {
+
+      const items = grouped[date][type];
+
+      // ===== 卡片 =====
+      const card = document.createElement("div");
+      card.className = "card timeline-item";
+      card.style.position = "relative";
+      card.style.paddingLeft = "20px";
+      card.style.borderLeft = "2px solid rgba(255,255,255,0.08)";
+
+      // ===== 左側節點 =====
+      const dot = document.createElement("div");
+      dot.style.position = "absolute";
+      dot.style.left = "-6px";
+      dot.style.top = "18px";
+      dot.style.width = "10px";
+      dot.style.height = "10px";
+      dot.style.borderRadius = "50%";
+      dot.style.background = "#00E676";
+      dot.style.boxShadow = "0 0 8px rgba(0,230,118,0.6)";
+      card.appendChild(dot);
+
+      // ===== 類型標題 =====
+      const title = document.createElement("div");
+      title.style.fontSize = "13px";
+      title.style.marginBottom = "6px";
+      title.style.color = "#00E676";
+      title.style.letterSpacing = "1px";
+      title.innerText = `[${type}]`;
+      card.appendChild(title);
+
+      // ===== 項目（全部列出）=====
+      items.forEach(w => {
+        const itemEl = document.createElement("div");
+        itemEl.style.fontSize = "14px";
+        itemEl.style.marginBottom = "4px";
+        itemEl.innerText = `- ${w.item}`;
+        card.appendChild(itemEl);
+      });
+
+      // ===== 技師（去重 + 右下角）=====
+      const techSet = new Set();
+
+      items.forEach(w => {
+        const name = getViewType().type === "tech"
+          ? (w.techFull || w.tech)
+          : w.tech;
+
+        if(name) techSet.add(name);
+      });
+
+      const techBox = document.createElement("div");
+      techBox.style.marginTop = "10px";
+      techBox.style.textAlign = "right";
+      techBox.style.fontSize = "12px";
+      techBox.style.color = "#aaa";
+
+      techSet.forEach(t => {
+        const line = document.createElement("div");
+        line.innerText = t;
+        techBox.appendChild(line);
+      });
+
+      card.appendChild(techBox);
+
+      container.appendChild(card);
+    });
+
   });
 }
   
