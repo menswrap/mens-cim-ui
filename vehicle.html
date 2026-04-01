@@ -497,7 +497,7 @@ body {
   <!-- 狀態 -->
   <div class="info-center">
   <div class="status">已完工</div>
-  <div class="meta">VID-000123</div>
+  <div class="meta"></div>
 </div>
 
   <!-- 綁定按鈕 -->
@@ -966,16 +966,10 @@ if(statusEl){
       `${data.brand || ""}｜${data.model || ""}｜${data.color || ""}`;
   }
 
-  const view = getViewType();
-
-if(view.type === "tech"){
-
   const metaEl = document.querySelector(".meta");
 
-  if(metaEl){
-    metaEl.innerText = `VID｜${data.vehicleId || "---"}`;
-  }
-
+if(metaEl){
+  metaEl.innerText = `VID｜${data.vehicleId || "---"}`;
 }
 
 }
