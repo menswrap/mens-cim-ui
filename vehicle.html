@@ -636,7 +636,9 @@ function renderTimeline(works){
     div.innerHTML = `
   <div>${formatDate(w.date)}</div>
   <div>${w.item}</div>
-  <div style="font-size:12px;color:#aaa">${w.tech}</div>
+  <div style="font-size:12px;color:#aaa">
+  ${getViewType().type === "tech" ? (w.techFull || w.tech) : w.tech}
+</div>
 `;
 
     container.appendChild(div);
