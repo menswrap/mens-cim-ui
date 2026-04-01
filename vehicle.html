@@ -628,7 +628,8 @@ function renderTimeline(works){
   const container = document.getElementById("timeline");
   container.innerHTML = "";
 
-  // ===== 類型排序（固定）=====
+  const view = getViewType();
+
   const typeOrder = ["施工","維護","回檢/修補","其他"];
 
   // ===== 分組：日期 → 類型 =====
@@ -638,11 +639,8 @@ function renderTimeline(works){
 
     const date = formatDate(w.date);
 
-    // 🔥 舊資料處理（空白 → 施工）
     let type = w.type;
-    if(!type || type === ""){
-      type = "施工";
-    }
+    if(!type || type === "") type = "施工";
 
     if(!grouped[date]) grouped[date] = {};
     if(!grouped[date][type]) grouped[date][type] = [];
@@ -650,23 +648,19 @@ function renderTimeline(works){
     grouped[date][type].push(w);
   });
 
-  // ===== 日期排序（新 → 舊）=====
   const dates = Object.keys(grouped)
     .sort((a,b)=> new Date(b) - new Date(a));
 
   dates.forEach(date => {
 
-    // ===== 日期標題 =====
+    // 日期
     const dateEl = document.createElement("div");
     dateEl.style.margin = "20px 0 10px";
     dateEl.style.fontSize = "13px";
     dateEl.style.color = "#aaa";
-    dateEl.style.letterSpacing = "1px";
     dateEl.innerText = date;
-
     container.appendChild(dateEl);
 
-    // ===== 類型排序 =====
     const types = Object.keys(grouped[date])
       .sort((a,b)=> typeOrder.indexOf(a) - typeOrder.indexOf(b));
 
@@ -674,14 +668,13 @@ function renderTimeline(works){
 
       const items = grouped[date][type];
 
-      // ===== 卡片 =====
       const card = document.createElement("div");
       card.className = "card timeline-item";
       card.style.position = "relative";
       card.style.paddingLeft = "20px";
       card.style.borderLeft = "2px solid rgba(255,255,255,0.08)";
 
-      // ===== 左側節點 =====
+      // 左側點
       const dot = document.createElement("div");
       dot.style.position = "absolute";
       dot.style.left = "-6px";
@@ -693,29 +686,63 @@ function renderTimeline(works){
       dot.style.boxShadow = "0 0 8px rgba(0,230,118,0.6)";
       card.appendChild(dot);
 
-      // ===== 類型標題 =====
+      // 類型
       const title = document.createElement("div");
       title.style.fontSize = "13px";
       title.style.marginBottom = "6px";
       title.style.color = "#00E676";
-      title.style.letterSpacing = "1px";
       title.innerText = `[${type}]`;
       card.appendChild(title);
 
-      // ===== 項目（全部列出）=====
+      // ===== 🔥 階層分組（核心） =====
+      const groupMap = {};
+
       items.forEach(w => {
-        const itemEl = document.createElement("div");
-        itemEl.style.fontSize = "14px";
-        itemEl.style.marginBottom = "4px";
-        itemEl.innerText = `- ${w.item}`;
-        card.appendChild(itemEl);
+
+        const parts = w.item.split(" - ");
+
+        const main = parts[0] || "";
+        const sub = parts[1] || "";
+        const action = parts[2] || "";
+
+        if(!groupMap[main]) groupMap[main] = new Set();
+
+        // 客戶模式（A）
+        if(view.type === "customer"){
+          if(sub) groupMap[main].add(sub);
+        }
+        // 技師模式（B）
+        else{
+          const full = action ? `${sub} - ${action}` : sub;
+          if(full) groupMap[main].add(full);
+        }
       });
 
-      // ===== 技師（去重 + 右下角）=====
+      // ===== render 分組 =====
+      Object.keys(groupMap).forEach(main => {
+
+        const mainEl = document.createElement("div");
+        mainEl.style.marginTop = "8px";
+        mainEl.style.fontWeight = "500";
+        mainEl.innerText = main;
+        card.appendChild(mainEl);
+
+        groupMap[main].forEach(sub => {
+          const subEl = document.createElement("div");
+          subEl.style.fontSize = "13px";
+          subEl.style.color = "#ccc";
+          subEl.style.marginLeft = "10px";
+          subEl.innerText = `- ${sub}`;
+          card.appendChild(subEl);
+        });
+
+      });
+
+      // ===== 技師（右下）=====
       const techSet = new Set();
 
       items.forEach(w => {
-        const name = getViewType().type === "tech"
+        const name = view.type === "tech"
           ? (w.techFull || w.tech)
           : w.tech;
 
