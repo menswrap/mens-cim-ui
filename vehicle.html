@@ -100,6 +100,21 @@ body {
   color:#00E676;
 }
 
+.status-badge{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+
+  color: #fff;
+  font-weight: 600;
+
+  backdrop-filter: blur(6px);
+}
+
 /* Card卡片樣式 */
 .card {
   background: linear-gradient(
@@ -904,6 +919,39 @@ function renderData(data){
   if(plateEl){
     plateEl.innerText = data.plate || "---";
   }
+
+  // 案件狀態
+  const statusEl = document.querySelector(".status");
+
+if(statusEl){
+
+  const status = data.status || "未知";
+
+  let color = "#999";
+  let bg = "rgba(255,255,255,0.1)";
+
+  if(status === "施工中"){
+    color = "#f1c40f";
+    bg = "rgba(241,196,15,0.15)";
+  }
+  else if(status === "已完工"){
+    color = "#00E676";
+    bg = "rgba(0,230,118,0.15)";
+  }
+  else if(status === "結案"){
+   color = "#00E676";
+    bg = "rgba(0,230,118,0.15)";
+  }
+  else if(status === "待施工"){
+    color = "#bbb";
+    bg = "rgba(255,255,255,0.08)";
+  }
+
+  statusEl.innerText = status;
+  statusEl.style.color = color;
+  statusEl.style.background = bg;
+
+}
 
   // 🔥 車主
   const ownerEl = document.querySelector(".owner");
