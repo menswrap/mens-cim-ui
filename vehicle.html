@@ -351,41 +351,20 @@ body {
   }
 }
   
-@keyframes sloganFlashFinal {
+@keyframes sloganFlashClean {
 
   0% {
     opacity: 0;
-    transform: translateY(8px) scale(0.98);
+    transform: translateY(6px);
   }
 
-  20% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  /* 🔥 爆光（用 shadow，不用暴力 brightness） */
   40% {
-  text-shadow:
-    0 0 12px rgba(255,255,255,0.9),
-    0 0 24px rgba(255,255,255,0.5);
-}
-
-  /* 🔥 停留（順） */
-  55% {
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.7),
-    0 0 18px rgba(255,255,255,0.4);
-}
-
-  /* ✨ 殘光（平滑下降） */
-  75% {
-  text-shadow:
-    0 0 6px rgba(255,255,255,0.3);
-}
+    text-shadow: 0 0 12px rgba(255,255,255,0.6);
+  }
 
   100% {
-    text-shadow:
-      0 0 6px rgba(255,255,255,0.08);
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255,255,255,0.15);
   }
 }
 
@@ -403,28 +382,16 @@ body {
   letter-spacing:2px;
   margin-top:4px;
 
-  background: linear-gradient(
-  100deg,
-  rgba(255,255,255,0) 0%,
-  rgba(255,255,255,0.1) 30%,
-  rgba(255,255,255,0.9) 45%,
-  rgba(255,255,255,0.3) 55%,
-  rgba(255,255,255,0) 70%
-);
+  /* ✅ 字本體是白的（先救清晰度） */
+  color:#fff;
 
-background-size: 220% auto;
+  /* ✅ 微光就好 */
+  text-shadow: 0 0 6px rgba(255,255,255,0.15);
 
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* ❌ 拿掉背景掃光 */
+  /* ❌ 拿掉 background-clip */
 
-  text-shadow: 0 0 6px rgba(255,255,255,0.08);
-
-  animation: 
-    sloganFlashFinal 2.2s ease-out forwards,
-    textShine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-
-  /* 🔥 核心：完全錯開 */
-  animation-delay: 0s, 1.9s;
+  animation: sloganFlashClean 1.6s ease-out forwards;
 }
     
 .owner {
