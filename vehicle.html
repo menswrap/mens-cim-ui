@@ -421,10 +421,12 @@ body {
 
   text-shadow: 0 0 6px rgba(255,255,255,0.08);
 
-  animation: sloganFlashFinal 2.4s ease-out forwards,
-             textShine 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: 
+    sloganFlashFinal 2.2s ease-out forwards,
+    textShine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 
-  animation-delay: 0.15s, 0.5s;
+  /* 🔥 核心：完全錯開 */
+  animation-delay: 0s, 1.9s;
 }
     
 .owner {
