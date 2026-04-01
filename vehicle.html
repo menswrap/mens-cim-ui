@@ -405,6 +405,9 @@ body {
     margin: 80px auto 90px;
   }
 }
+  .tech-mode .hero-card {
+  border: 1px solid rgba(0, 230, 118, 0.25);
+}
   
 </style>
 </head>
@@ -742,6 +745,18 @@ function renderData(data){
       `${data.brand || ""}｜${data.model || ""}｜${data.color || ""}`;
   }
 
+  const view = getViewType();
+
+if(view.type === "tech"){
+
+  const metaEl = document.querySelector(".meta");
+
+  if(metaEl){
+    metaEl.innerText = `VID｜${data.vehicleId || "---"}`;
+  }
+
+}
+
 }
   
 // ===== 讀資料 =====
@@ -770,7 +785,14 @@ async function loadData(){
 
 window.onload = function(){
 
-  console.log("模式:", getViewType());
+  const view = getViewType();
+
+  console.log("模式:", view);
+
+  // 🔥 加在這裡（就是這裡）
+  if(view.type === "tech"){
+    document.body.classList.add("tech-mode");
+  }
 
   testAPI();
 };
