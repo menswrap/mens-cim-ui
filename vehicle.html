@@ -507,6 +507,25 @@ body {
 
 <script>
 
+// ===== 分辨 客戶 / 技師 =====
+function getViewType(){
+
+  const params = new URLSearchParams(window.location.search);
+
+  const plate = params.get("plate");
+  const vehicleId = params.get("VehicleID");
+
+  if(vehicleId){
+    return "tech";
+  }
+
+  if(plate){
+    return "customer";
+  }
+
+  return "unknown";
+}
+  
 // ===== Render Warranty =====
 function getColor(r){
   if(r <= 0) return "#E53935";
@@ -735,7 +754,10 @@ async function loadData(){
 }
 
 window.onload = function(){
-  testAPI();   // 🔥 這行才是真正啟動
+
+  console.log("模式:", getViewType());
+
+  testAPI();
 };
   
 </script>
