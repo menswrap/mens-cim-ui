@@ -515,15 +515,26 @@ function getViewType(){
   const plate = params.get("plate");
   const vehicleId = params.get("VehicleID");
 
+  // 技師模式
   if(vehicleId){
-    return "tech";
+    return {
+      type: "tech",
+      value: vehicleId
+    };
   }
 
+  // 客戶模式
   if(plate){
-    return "customer";
+    return {
+      type: "customer",
+      value: plate
+    };
   }
 
-  return "unknown";
+  return {
+    type: "unknown",
+    value: ""
+  };
 }
   
 // ===== Render Warranty =====
