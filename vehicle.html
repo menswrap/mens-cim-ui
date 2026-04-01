@@ -699,35 +699,47 @@ function renderTimeline(works){
 
       items.forEach(w => {
 
-        const parts = w.item.split(" - ");
+  const parts = w.item.split(" - ").map(p => p.trim());
 
-        const main = parts[0] || "";
-        const sub = parts[1] || "";
-        const action = parts[2] || "";
+  const main = parts[0] || "";
+  const sub = parts[1] || "";
+  const action = parts[2] || "";
 
-        if(!groupMap[main]) groupMap[main] = new Set();
+  if(!groupMap[main]){
+    groupMap[main] = { subMap: {} };
+  }
 
-        const full = action ? `${sub} - ${action}` : sub;
-if(full) groupMap[main].add(full);
-        });
+  if(!groupMap[main].subMap[sub]){
+    groupMap[main].subMap[sub] = new Set();
+  }
+
+  if(action){
+    groupMap[main].subMap[sub].add(action);
+  }else{
+    groupMap[main].subMap[sub].add("");
+  }
+
+});
 
       // ===== render 分組 =====
-      Object.keys(groupMap).forEach(main => {
+      Object.keys(groupMap[main].subMap).forEach(sub => {
 
-        const mainEl = document.createElement("div");
-        mainEl.style.marginTop = "8px";
-        mainEl.style.fontWeight = "500";
-        mainEl.innerText = main;
-        card.appendChild(mainEl);
+  const actions = Array.from(groupMap[main].subMap[sub])
+    .filter(a => a);
 
-        groupMap[main].forEach(sub => {
-          const subEl = document.createElement("div");
-          subEl.style.fontSize = "13px";
-          subEl.style.color = "#ccc";
-          subEl.style.marginLeft = "10px";
-          subEl.innerText = `- ${sub}`;
-          card.appendChild(subEl);
-        });
+  const text = actions.length > 0
+    ? `${sub} - ${actions.join(" / ")}`
+    : sub;
+
+  const subEl = document.createElement("div");
+  subEl.style.fontSize = "13px";
+  subEl.style.color = "#ccc";
+  subEl.style.marginLeft = "10px";
+  subEl.innerText = `- ${text}`;
+
+  card.appendChild(subEl);
+
+});
 
       });
 
