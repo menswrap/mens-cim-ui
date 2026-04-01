@@ -408,7 +408,36 @@ body {
   .tech-mode .hero-card {
   border: 1px solid rgba(0, 230, 118, 0.25);
 }
-  
+
+  .tech-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+
+  font-size: 10px;
+  letter-spacing: 1px;
+
+  padding: 4px 8px;
+  border-radius: 20px;
+
+  background: rgba(0, 230, 118, 0.12);
+  color: #00E676;
+
+  border: 1px solid rgba(0, 230, 118, 0.3);
+
+  box-shadow:
+    0 0 10px rgba(0, 230, 118, 0.2);
+
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.3s ease;
+}
+
+/* 🔥 只有技師模式顯示 */
+.tech-mode .tech-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 
@@ -419,6 +448,8 @@ body {
   <!-- Header -->
 <div class="header">
   <div class="hero-card">
+     <!-- 🔥 技師標籤 -->
+  <div class="tech-badge">TECH MODE</div>
 
   <!-- 品牌主體 -->
   <div class="brand-hero">
