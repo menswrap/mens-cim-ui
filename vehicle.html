@@ -709,6 +709,7 @@ function renderTimeline(works){
 
         const full = action ? `${sub} - ${action}` : sub;
 if(full) groupMap[main].add(full);
+        });
 
       // ===== render 分組 =====
       Object.keys(groupMap).forEach(main => {
