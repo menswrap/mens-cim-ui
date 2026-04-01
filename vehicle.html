@@ -608,6 +608,11 @@ function renderWarranty(materials){
       const dangerClass = percent <= 0 ? "danger" : "";
       const borderColor = getBorderColor(percent/100);
 
+      const expiredLabel = percent <= 0 ? 
+  `<div style="color:#E53935;font-size:12px;margin-top:6px;">
+     ⚠ 已過保固
+   </div>` : "";
+
       const div = document.createElement("div");
       div.className="card";
 
@@ -622,11 +627,16 @@ function renderWarranty(materials){
 
         <div class="bar-bg" style="border:1px solid ${borderColor}">
           <div class="bar ${dangerClass}" 
-               style="width:${percent}%;background:${getColor(percent/100)}">
-          </div>
+     style="
+       width:${percent <= 0 ? '100%' : percent + '%'};
+       background:${percent <= 0 ? '#E53935' : getColor(percent/100)};
+       opacity:${percent <= 0 ? '0.8' : '1'};
+     ">
+</div>
         </div>
 
         <div style="font-size:12px;margin-top:4px;">${percent}%</div>
+         ${expiredLabel}
       `;
 
       el.appendChild(div);
