@@ -722,26 +722,37 @@ function renderTimeline(works){
 });
 
       // ===== render 分組 =====
-      Object.keys(groupMap[main].subMap).forEach(sub => {
+Object.keys(groupMap).forEach(main => {
 
-  const actions = Array.from(groupMap[main].subMap[sub])
-    .filter(a => a);
+  // 主分類
+  const mainEl = document.createElement("div");
+  mainEl.style.fontSize = "14px";
+  mainEl.style.color = "#fff";
+  mainEl.style.marginTop = "6px";
+  mainEl.innerText = main;
+  card.appendChild(mainEl);
 
-  const text = actions.length > 0
-    ? `${sub} - ${actions.join(" / ")}`
-    : sub;
+  // 子分類
+  Object.keys(groupMap[main].subMap).forEach(sub => {
 
-  const subEl = document.createElement("div");
-  subEl.style.fontSize = "13px";
-  subEl.style.color = "#ccc";
-  subEl.style.marginLeft = "10px";
-  subEl.innerText = `- ${text}`;
+    const actions = Array.from(groupMap[main].subMap[sub])
+      .filter(a => a);
 
-  card.appendChild(subEl);
+    const text = actions.length > 0
+      ? `${sub} - ${actions.join(" | ")}`
+      : sub;
+
+    const subEl = document.createElement("div");
+    subEl.style.fontSize = "13px";
+    subEl.style.color = "#ccc";
+    subEl.style.marginLeft = "10px";
+    subEl.innerText = `- ${text}`;
+
+    card.appendChild(subEl);
+
+  });
 
 });
-
-      });
 
       // ===== 技師（右下）=====
       const techSet = new Set();
