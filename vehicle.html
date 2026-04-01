@@ -707,16 +707,8 @@ function renderTimeline(works){
 
         if(!groupMap[main]) groupMap[main] = new Set();
 
-        // 客戶模式（A）
-        if(view.type === "customer"){
-          if(sub) groupMap[main].add(sub);
-        }
-        // 技師模式（B）
-        else{
-          const full = action ? `${sub} - ${action}` : sub;
-          if(full) groupMap[main].add(full);
-        }
-      });
+        const full = action ? `${sub} - ${action}` : sub;
+if(full) groupMap[main].add(full);
 
       // ===== render 分組 =====
       Object.keys(groupMap).forEach(main => {
