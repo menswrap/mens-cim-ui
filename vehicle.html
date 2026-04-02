@@ -1012,9 +1012,9 @@ function isLine(){
 }
 
 // ===== 綁定按鈕控制 =====
-if(isLine()){
+
   document.getElementById("bindBtn").style.display="block";
-}else{
+else{
   setTimeout(() => {
     showToast("請使用 LINE 掃描 QR Code 才可綁定");
   }, 2500);   // 🔥 延遲出現
@@ -1056,6 +1056,8 @@ function getBorderColor(r){
 // ===== 綁定 LINE和車輛=====
 document.getElementById("bindBtn").onclick = async function(){
 
+  alert("有觸發");  // 👈先確認這個
+  
   await liff.init({ liffId: "2009682379-TbLPDrAQ" });
 
   if(!liff.isLoggedIn()){
