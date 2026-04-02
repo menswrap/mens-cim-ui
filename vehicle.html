@@ -1080,7 +1080,7 @@ document.getElementById("bindBtn").onclick = async function(){
   const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
 
   alert("準備送資料");
- fetch(url, {
+fetch(url, {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -1092,10 +1092,16 @@ document.getElementById("bindBtn").onclick = async function(){
     plate
   })
 })
-.then(res => res.text())
-.then(res => console.log("GAS回傳:", res))
-.catch(err => console.log("錯誤:", err));
-};
+.then(res => {
+  alert("status: " + res.status);
+  return res.text();
+})
+.then(res => {
+  alert("回傳: " + res);
+})
+.catch(err => {
+  alert("錯誤: " + err);
+});
 
 function getPlateFromURL(){
   const params = new URLSearchParams(window.location.search);
