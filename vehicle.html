@@ -250,6 +250,18 @@ body {
   100% { opacity:1; }
 }
 
+ /* sloagn */ 
+.s1 {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.s1.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease;
+}
+  
 .danger {
   animation: blink 1s infinite;
   box-shadow: 0 0 8px #E53935;
@@ -373,9 +385,6 @@ body {
 
   opacity: 0;
   transform: translateY(6px);
-
-  animation: fadeUp 0.8s ease-out forwards;
-  animation-delay: 0.4s;
 }
 
 @keyframes fadeUp {
@@ -1045,11 +1054,18 @@ window.onload = function(){
 
   console.log("模式:", view);
 
-  // 🔥 加在這裡（就是這裡）
+  // 技師模式
   if(view.type === "tech"){
     document.body.classList.add("tech-mode");
   }
 
+// Sloagn 第一句進場時間設定
+// toast 消失後S1進場
+const s1 = document.querySelector(".s1");
+
+setTimeout(() => {
+  s1.classList.add("show");
+}, 2200);
   testAPI();
 };
   
