@@ -1073,22 +1073,21 @@ document.getElementById("bindBtn").onclick = async function(){
 
   const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      action: "bindLine",
-      userId,
-      name,
-      plate
-    })
-  });
-  .then(res => res.text())
+ fetch(url, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    action: "bindLine",
+    userId,
+    name,
+    plate
+  })
+})
+.then(res => res.text())
 .then(res => console.log("GAS回傳:", res))
 .catch(err => console.log("錯誤:", err));
-
 };
 
 function getPlateFromURL(){
