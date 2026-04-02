@@ -582,6 +582,11 @@ opacity: 0.9;
   color:#aaa;
 }
 
+/* 🔥 用戶（高質感） */
+.owner img {
+  border:1px solid rgba(255,255,255,0.3);
+}
+  
 .footer-sign {
   margin-top:10px;
   font-size:10px;
@@ -797,6 +802,26 @@ function getViewType(){
     type: "unknown",
     value: ""
   };
+}
+
+// ===== renderOwnerProfile =====
+function renderOwnerProfile(profile){
+
+  window.hasLineProfile = true;
+
+  const ownerEl = document.querySelector(".owner");
+
+  ownerEl.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+      
+      <img src="${profile.avatar}" 
+           style="width:26px;height:26px;border-radius:50%;
+                  box-shadow:0 0 6px rgba(255,255,255,0.3);">
+
+      <span>${profile.name}</span>
+
+    </div>
+  `;
 }
   
 // ===== Render Warranty =====
@@ -1093,12 +1118,16 @@ fetch(url)
 
   // 記錄綁定狀態
   localStorage.setItem("bound_" + plate, "1");
+    
+// 🔥 隱藏按鈕
+    const btn = document.getElementById("bindBtn");
+    btn.style.display = "none";
 
-  const btn = document.getElementById("bindBtn");
-  btn.innerText = "已綁定";
-  btn.disabled = true;
-  btn.style.opacity = "0.6";
-})
+    // 🔥 顯示「已綁定」標籤（高質感版）
+    const bindStatus = document.getElementById("bindStatus");
+    bindStatus.style.display = "inline-block";
+    bindStatus.classList.add("show");
+  })
   .catch(err => {
     alert("錯誤：" + err);
   });
@@ -1183,9 +1212,9 @@ if(statusEl){
 
   // 🔥 車主
   const ownerEl = document.querySelector(".owner");
-  if(ownerEl){
-    ownerEl.innerText = "Owner："+(data.owner || "---");
-  }
+  if(!window.hasLineProfile){
+  ownerEl.innerText = "Owner："+(data.owner || "---");
+}
 
   // 🔥 車輛資訊
   const carEl = document.querySelector(".car-info");
@@ -1223,8 +1252,13 @@ async function loadData(){
     console.log("API資料：", data);
     
     renderData(data);
-    renderWarranty(data.materials);
-    renderTimeline(data.works);
+    const profile = await loadLineProfile();
+
+if(profile){
+  renderOwnerProfile(profile);
+}
+    renderWarranty(data.materials || []);
+renderTimeline(data.works || []);
 
     // 綁定狀態（暫時版）
     if(localStorage.getItem("bound_" + plate)){
@@ -1268,6 +1302,30 @@ window.onload = function(){
     s3.classList.add("shine");
   }, 6800);
 };
+
+// ===== 抓用戶資料資料 =====  
+async function loadLineProfile(){
+
+  try{
+    await liff.init({ liffId: "2009682379-TbLPDrAQ" });
+
+    if(!liff.isLoggedIn()){
+      return null;
+    }
+
+    const profile = await liff.getProfile();
+
+    return {
+      name: profile.displayName,
+      avatar: profile.pictureUrl,
+      userId: profile.userId
+    };
+
+  }catch(e){
+    console.log("LINE讀取失敗", e);
+    return null;
+  }
+}
   
 </script>
 
