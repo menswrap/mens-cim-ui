@@ -278,7 +278,7 @@ body {
 
 /* 🔥 絲滑掃光 */
 .s3.shine {
-   position: relative;
+  position: relative;
   background: linear-gradient(
     100deg,
     #ffffff 0%,
@@ -335,10 +335,11 @@ body {
 
   background: radial-gradient(
     ellipse at center,
-    rgba(255,255,255,0.35) 0%,
-    rgba(255,255,255,0.15) 40%,
-    rgba(255,255,255,0) 70%
-  );
+    rgba(255,255,255,0.65) 0%,
+  rgba(255,255,255,0.3) 35%,
+  rgba(255,255,255,0.1) 55%,
+  rgba(255,255,255,0) 75%
+);
 
   filter: blur(8px);
   opacity: 0;
@@ -1195,7 +1196,7 @@ const s1 = document.querySelector(".s1");
 
 setTimeout(() => {
   s1.classList.add("show");
-}, 2200);
+}, 5500);
 
 // Sloagn 第二句進場時間設定
 // S1 進場後S3進場
@@ -1203,11 +1204,11 @@ const s3 = document.querySelector(".s3");
 
 setTimeout(() => {
   s3.classList.add("show");
-}, 2600);
+}, 6000);
 
 setTimeout(() => {
   s3.classList.add("shine");
-}, 3400);
+}, 6800);
   
   testAPI();
 };
