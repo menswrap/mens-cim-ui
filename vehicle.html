@@ -564,6 +564,19 @@ opacity: 0.9;
   letter-spacing:1px;
 }
 
+/* 🔥 已綁定（高質感） */
+.status-bound {
+  color: #00E676;
+  background: rgba(0,230,118,0.15);
+  border: 1px solid rgba(0,230,118,0.35);
+
+  box-shadow:
+    0 0 10px rgba(0,230,118,0.2),
+    0 0 20px rgba(0,230,118,0.05) inset;
+
+  animation: glowPulse 2s infinite alternate;
+}
+
 .meta {
   font-size:12px;
   color:#aaa;
@@ -693,6 +706,8 @@ opacity: 0.9;
   <!-- 狀態 -->
   <div class="info-center">
   <div class="status">已完工</div>
+<div class="status status-bound" id="bindStatus" style="display:none;">
+  已綁定</div>
   <div class="meta"></div>
 </div>
 
@@ -1221,11 +1236,10 @@ async function loadData(){
 
     // 綁定狀態（暫時版）
     if(localStorage.getItem("bound_" + plate)){
-      const btn = document.getElementById("bindBtn");
-      btn.innerText = "已綁定";
-      btn.disabled = true;
-      btn.style.opacity = "0.6";
-    }
+  const bindStatus = document.getElementById("bindStatus");
+  bindStatus.style.display = "inline-block";
+  bindStatus.classList.add("show");
+}
 
   }catch(err){
     console.error("讀取失敗", err);
