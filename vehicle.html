@@ -1058,9 +1058,11 @@ function getBorderColor(r){
 // ===== 綁定 LINE和車輛=====
 document.getElementById("bindBtn").onclick = async function(){
 
-  alert("有觸發");  // 👈先確認這個
+  alert("開始LIFF");
   
   await liff.init({ liffId: "2009682379-TbLPDrAQ" });
+
+  alert("LIFF OK");
 
   if(!liff.isLoggedIn()){
     liff.login();
@@ -1077,6 +1079,7 @@ document.getElementById("bindBtn").onclick = async function(){
 
   const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
 
+  alert("準備送資料");
  fetch(url, {
   method: "POST",
   headers: {
