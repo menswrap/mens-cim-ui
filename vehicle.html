@@ -278,11 +278,26 @@ body {
 
 /* 🔥 絲滑掃光 */
 .s3.shine {
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #ffffff 40%,
+    #ffffff 50%,
+    #ffffff 60%,
+    #ffffff 100%
+  );
+
+  background-size: 200% auto;
+  background-position: -150% center;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: textShine 2.4s ease-out forwards;
 }
 
 .s3.shine::after {
+  display: none;
   content: "";
   position: absolute;
   top: 0;
@@ -306,6 +321,15 @@ body {
   animation: smoothShine 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+@keyframes textShine {
+  0% {
+    background-position: -150% center;
+  }
+  100% {
+    background-position: 150% center;
+  }
+}
+  
 @keyframes smoothShine {
   0% {
     left: -120%;
