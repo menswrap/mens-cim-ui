@@ -1260,11 +1260,14 @@ if(profile){
     renderWarranty(data.materials || []);
 renderTimeline(data.works || []);
 
-    // 綁定狀態（暫時版）
+    // 綁定狀態
     if(localStorage.getItem("bound_" + plate)){
   const bindStatus = document.getElementById("bindStatus");
   bindStatus.style.display = "inline-block";
   bindStatus.classList.add("show");
+      // 🔥 綁定成功隱藏按鈕
+  const btn = document.getElementById("bindBtn");
+  btn.style.display = "none";
 }
 
   }catch(err){
