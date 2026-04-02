@@ -1085,6 +1085,9 @@ document.getElementById("bindBtn").onclick = async function(){
       plate
     })
   });
+  .then(res => res.text())
+.then(res => console.log("GAS回傳:", res))
+.catch(err => console.log("錯誤:", err));
 
 };
 
