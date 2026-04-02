@@ -1057,12 +1057,8 @@ function getBorderColor(r){
   
 // ===== 綁定 LINE和車輛=====
 document.getElementById("bindBtn").onclick = async function(){
-
-  alert("開始LIFF");
-  
+ 
   await liff.init({ liffId: "2009682379-TbLPDrAQ" });
-
-  alert("LIFF OK");
 
   if(!liff.isLoggedIn()){
     liff.login();
@@ -1077,9 +1073,7 @@ document.getElementById("bindBtn").onclick = async function(){
   const params = new URLSearchParams(window.location.search);
   const plate = params.get("plate");
 
- alert("準備送資料");
-
-const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
+  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
   + "?action=bindLine"
   + "&userId=" + encodeURIComponent(userId)
   + "&name=" + encodeURIComponent(name)
@@ -1088,8 +1082,16 @@ const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1
 fetch(url)
   .then(res => res.text())
   .then(res => {
-    alert("綁定成功");
-  })
+  showToast("✅ 已成功綁定此車輛");
+
+  // 記錄綁定狀態
+  localStorage.setItem("bound_" + plate, "1");
+
+  const btn = document.getElementById("bindBtn");
+  btn.innerText = "已綁定";
+  btn.disabled = true;
+  btn.style.opacity = "0.6";
+})
   .catch(err => {
     alert("錯誤：" + err);
   });
@@ -1103,10 +1105,7 @@ function getPlateFromURL(){
 
 function handleData(data){
 
-  console.log("API回傳:", data);
-
   if(data.error){
-    console.log("錯誤:", data.error);
     showToast("查無資料");
     return;
   }
@@ -1133,29 +1132,6 @@ function formatDate(d){
          date.getDate();
 }
   
-// ===== 測試資料 =====
-function testAPI(){
-
-  const view = getViewType();
-
-  let url = "";
-
-  if(view.type === "tech"){
-    url = `https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?VehicleID=${view.value}&callback=handleData`;
-  }
-  else{
-    url = `https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=${view.value}&callback=handleData`;
-  }
-
-  console.log("模式:", view.type);
-  console.log("值:", view.value);
-  console.log("API URL:", url);
-
-  const script = document.createElement("script");
-  script.src = url;
-  document.body.appendChild(script);
-}
-
 function renderData(data){
 
   // 🔥 車牌（大字）
@@ -1222,10 +1198,16 @@ if(metaEl){
 // ===== 讀資料 =====
 async function loadData(){
 
-  // 🔥 之後這裡會動態帶車牌（先寫死測試）
-  const plate = "ABC-5678";
+  const params = new URLSearchParams(window.location.search);
+  const plate = params.get("plate");
 
-  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=" + plate;
+  if(!plate){
+    showToast("缺少車牌參數");
+    return;
+  }
+
+  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=" 
+    + encodeURIComponent(plate);
 
   try{
     const res = await fetch(url);
@@ -1236,6 +1218,14 @@ async function loadData(){
     renderVehicle(data);
     renderWarranty(data.materials);
     renderTimeline(data.works);
+
+    // 綁定狀態（暫時版）
+    if(localStorage.getItem("bound_" + plate)){
+      const btn = document.getElementById("bindBtn");
+      btn.innerText = "已綁定";
+      btn.disabled = true;
+      btn.style.opacity = "0.6";
+    }
 
   }catch(err){
     console.error("讀取失敗", err);
@@ -1254,27 +1244,23 @@ window.onload = function(){
     document.body.classList.add("tech-mode");
   }
 
-// Sloagn 第一句進場時間設定
-// toast 消失後S1進場
-const s1 = document.querySelector(".s1");
+  // 讀資料
+  loadData();
 
-setTimeout(() => {
-  s1.classList.add("show");
-}, 5500);
+  // 動畫
+  const s1 = document.querySelector(".s1");
+  setTimeout(() => {
+    s1.classList.add("show");
+  }, 5500);
 
-// Sloagn 第二句進場時間設定
-// S1 進場後S3進場
-const s3 = document.querySelector(".s3");
+  const s3 = document.querySelector(".s3");
+  setTimeout(() => {
+    s3.classList.add("show");
+  }, 6000);
 
-setTimeout(() => {
-  s3.classList.add("show");
-}, 6000);
-
-setTimeout(() => {
-  s3.classList.add("shine");
-}, 6800);
-  
-  testAPI();
+  setTimeout(() => {
+    s3.classList.add("shine");
+  }, 6800);
 };
   
 </script>
