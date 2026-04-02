@@ -1054,14 +1054,6 @@ function toggleCars(){
   alert("未來這裡做切車");
 }
 
-function renderVehicle(data){
-
-document.querySelector(".plate-big").innerText = data.plate;
-
-document.querySelector(".car-info").innerText =
-    `${data.brand}｜${data.model}｜${data.color}`;
-}
-
 // ===== 血條外框 =====  
 function getBorderColor(r){
   if(r <= 0) return "#E53935";     // 過期
@@ -1229,8 +1221,8 @@ async function loadData(){
     const data = await res.json();
 
     console.log("API資料：", data);
-
-    renderVehicle(data);
+    
+    renderData(data);
     renderWarranty(data.materials);
     renderTimeline(data.works);
 
