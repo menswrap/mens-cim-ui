@@ -94,12 +94,32 @@ body {
   display:inline-block;
   margin-top:9px;
   font-size:13px;
-  padding:4px 10px;
-  border-radius:19px;
-  background:rgba(0,230,118,0.15);
-  color:#00E676;
+  padding:6px 12px;
+  border-radius:999px;
+
+  font-weight:600;
+  letter-spacing:0.5px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.08);
+
+  position: relative;
+
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.35s ease;
 }
 
+.status.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
 .status-badge{
   position: absolute;
   top: 16px;
@@ -1136,6 +1156,7 @@ if(statusEl){
   statusEl.innerText = status;
   statusEl.style.color = color;
   statusEl.style.background = bg;
+  statusEl.classList.add("show");
 
 }
 
