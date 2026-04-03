@@ -1207,7 +1207,21 @@ function handleData(data){
 
     select.value = data.plate;
   }
+  
+// 🔥 切換車輛
+select.onchange = function(){
 
+  const newPlate = this.value;
+
+  // 保留 userId（很重要）
+  const userId = LINE_PROFILE?.userId || "";
+
+  window.location.href =
+    window.location.pathname +
+    "?plate=" + encodeURIComponent(newPlate) +
+    "&userId=" + encodeURIComponent(userId);
+
+};
 }
 
 function formatDate(d){
