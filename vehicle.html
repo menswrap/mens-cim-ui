@@ -1254,7 +1254,7 @@ if(metaEl){
 }
   
 // ===== 讀資料 =====
-async function loadData(){
+function loadData(){
 
   const params = new URLSearchParams(window.location.search);
   const plate = params.get("plate");
@@ -1264,36 +1264,15 @@ async function loadData(){
     return;
   }
 
-  const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec?plate=" 
-    + encodeURIComponent(plate);
+  const url =
+    "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
+    + "?plate=" + encodeURIComponent(plate)
+    + "&callback=handleData";
 
-  try{
-    const res = await fetch(url);
-    const data = await res.json();
+  const script = document.createElement("script");
+  script.src = url;
 
-    console.log("API資料：", data);
-    
-    renderData(data);
-    if(LINE_PROFILE){
-  renderOwnerProfile(LINE_PROFILE);
-}
-    renderWarranty(data.materials || []);
-renderTimeline(data.works || []);
-
-    // 綁定狀態
-    if(localStorage.getItem("bound_" + plate)){
-  const bindStatus = document.getElementById("bindStatus");
-  bindStatus.style.display = "inline-block";
-  bindStatus.classList.add("show");
-      // 🔥 綁定成功隱藏按鈕
-  const btn = document.getElementById("bindBtn");
-  btn.style.display = "none";
-}
-
-  }catch(err){
-    console.error("讀取失敗", err);
-    showToast("資料讀取失敗");
-  }
+  document.body.appendChild(script);
 }
 
 // ===== 主卡片資料出現時序控制 =====
