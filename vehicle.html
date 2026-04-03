@@ -802,11 +802,6 @@ async function initLine(){
     // 🔥 LINE資料準備好 → 直接畫上去（強制）
 renderOwnerProfile(LINE_PROFILE);
 
-    // 🔥 如果資料已經載入過 → 直接補渲染
-if(window._DATA_READY){
-  renderOwnerProfile(LINE_PROFILE);
-}
-
   }catch(e){
     console.log("LIFF init 失敗", e);
   }
