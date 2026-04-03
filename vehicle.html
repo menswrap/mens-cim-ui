@@ -1161,6 +1161,8 @@ function getPlateFromURL(){
 
 function handleData(data){
 
+  console.log("cars:", data.cars);
+
   window._DATA_READY = true;
 
   if(data.error){
