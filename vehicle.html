@@ -806,19 +806,13 @@ function getViewType(){
 // ===== renderOwnerProfile =====
 function renderOwnerProfile(profile){
 
-  window.hasLineProfile = true;
-
   const ownerEl = document.querySelector(".owner");
 
   ownerEl.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
-      
       <img src="${profile.avatar}" 
-           style="width:26px;height:26px;border-radius:50%;
-                  box-shadow:0 0 6px rgba(255,255,255,0.3);">
-
+           style="width:26px;height:26px;border-radius:50%;">
       <span>${profile.name}</span>
-
     </div>
   `;
 }
@@ -1211,9 +1205,7 @@ if(statusEl){
 
   // 🔥 車主
   const ownerEl = document.querySelector(".owner");
-  if(!window.hasLineProfile){
   ownerEl.innerText = "Owner："+(data.owner || "---");
-}
 
   // 🔥 車輛資訊
   const carEl = document.querySelector(".car-info");
