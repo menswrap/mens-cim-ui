@@ -1305,17 +1305,29 @@ function loadData(){
 
   const params = new URLSearchParams(window.location.search);
   const plate = params.get("plate");
+  const mode = params.get("mode");
 
   if(!plate){
     showToast("缺少車牌參數");
     return;
   }
 
-  const url =
-    "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
-   + "?plate=" + encodeURIComponent(plate)
-   + "&userId=" + encodeURIComponent(LINE_PROFILE?.userId || "")
-   + "&callback=handleData";
+  let url =
+  "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
+
+if(mode === "mycar"){
+
+  const userId = LINE_PROFILE?.userId || "";
+
+  url += "?userId=" + encodeURIComponent(userId)
+       + "&callback=handleData";
+
+}else{
+
+  url += "?plate=" + encodeURIComponent(plate)
+       + "&userId=" + encodeURIComponent(LINE_PROFILE?.userId || "")
+       + "&callback=handleData";
+}
 
   const script = document.createElement("script");
   script.src = url;
