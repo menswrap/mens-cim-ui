@@ -779,15 +779,18 @@ async function initLine(){
   try{
     await liff.init({ liffId: "2009682379-TbLPDrAQ" });
 
-    if(liff.isLoggedIn()){
-      const profile = await liff.getProfile();
-
-      LINE_PROFILE = {
-        name: profile.displayName,
-        avatar: profile.pictureUrl,
-        userId: profile.userId
-      };
+    if(!liff.isLoggedIn()){
+      liff.login(); // 🔥 沒登入就跳登入
+      return;
     }
+
+    const profile = await liff.getProfile();
+
+    LINE_PROFILE = {
+      name: profile.displayName,
+      avatar: profile.pictureUrl,
+      userId: profile.userId
+    };
 
   }catch(e){
     console.log("LIFF init 失敗", e);
@@ -1326,30 +1329,6 @@ window.onload = async function(){
   }, 2800);
 
 };
-
-// ===== 抓用戶資料資料 =====  
-async function loadLineProfile(){
-
-  try{
-    await liff.init({ liffId: "2009682379-TbLPDrAQ" });
-
-    if(!liff.isLoggedIn()){
-      return null;
-    }
-
-    const profile = await liff.getProfile();
-
-    return {
-      name: profile.displayName,
-      avatar: profile.pictureUrl,
-      userId: profile.userId
-    };
-
-  }catch(e){
-    console.log("LINE讀取失敗", e);
-    return null;
-  }
-}
   
 </script>
 
