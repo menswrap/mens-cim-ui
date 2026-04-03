@@ -799,6 +799,11 @@ async function initLine(){
       userId: profile.userId
     };
 
+    // 🔥 如果資料已經載入過 → 直接補渲染
+if(window._DATA_READY){
+  renderOwnerProfile(LINE_PROFILE);
+}
+
   }catch(e){
     console.log("LIFF init 失敗", e);
   }
@@ -1323,7 +1328,7 @@ window.onload = async function(){
           // ⑤ 最後才載資料（畫面穩定後）
           loadData();
 
-        }, 2600); // shine duration
+        }, 1300); // shine duration
 
       }, 900); // show → shine 間隔
 
