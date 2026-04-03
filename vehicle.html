@@ -1283,34 +1283,35 @@ window.onload = function(){
     document.body.classList.add("tech-mode");
   }
 
-  // 讀資料
-  setTimeout(() => {
-    loadData();
-  }, 4900);
-
-  // slogan 第一段
   const s1 = document.querySelector(".s1");
-  setTimeout(() => {
-    s1.classList.add("show");
-  }, 3900);
-
-  // slogan 第二段
   const s3 = document.querySelector(".s3");
 
-  // 🔥 先顯示
+  // ① 第一段 slogan
   setTimeout(() => {
-    s3.classList.add("show");
-  }, 4800);
+    s1.classList.add("show");
 
-  // 🔥 再掃光
-  setTimeout(() => {
-    s3.classList.add("shine");
-
+    // ② 第二段 slogan 出現
     setTimeout(() => {
-      s3.classList.remove("shine");
-    }, 2200);
+      s3.classList.add("show");
 
-  }, 5000);
+      // ③ 掃光開始
+      setTimeout(() => {
+        s3.classList.add("shine");
+
+        // ④ 掃光結束
+        setTimeout(() => {
+          s3.classList.remove("shine");
+
+          // ⑤ 最後才載資料（畫面穩定後）
+          loadData();
+
+        }, 2200); // shine duration
+
+      }, 260); // show → shine 間隔
+
+    }, 620); // s1 → s3 間隔
+
+  }, 3900);
 
 };
 
