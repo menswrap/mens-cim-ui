@@ -779,18 +779,11 @@ async function initLine(){
   try{
     await liff.init({ liffId: "2009682379-TbLPDrAQ" });
 
-    // ❗不是 LINE 環境 → 直接跳出
-    if(!liff.isInClient()){
-      return;
-    }
-
-    // ❗沒登入 → 不做任何事（重點）
     if(!liff.isLoggedIn()){
-      console.log("未登入 LINE，跳過");
+      liff.login();
       return;
     }
 
-    // ✅ 已登入才拿資料
     const profile = await liff.getProfile();
 
     LINE_PROFILE = {
@@ -798,9 +791,6 @@ async function initLine(){
       avatar: profile.pictureUrl,
       userId: profile.userId
     };
-
-    // 🔥 LINE資料準備好 → 直接畫上去（強制）
-renderOwnerProfile(LINE_PROFILE);
 
   }catch(e){
     console.log("LIFF init 失敗", e);
@@ -1184,11 +1174,6 @@ function handleData(data){
   // 🔥 時間軸
   renderTimeline(data.works || []);
 
-   // 🔥 顯示 LINE 使用者（放最前面）
-if(LINE_PROFILE){
-  renderOwnerProfile(LINE_PROFILE);
-}
-  
 // 🔥 用後端 isBound 判斷
 if(data.isBound){
 
@@ -1198,8 +1183,6 @@ if(data.isBound){
 
   const btn = document.getElementById("bindBtn");
   btn.style.display = "none";
-
-}
 }
 
 function formatDate(d){
@@ -1258,7 +1241,11 @@ if(statusEl){
 
   // 🔥 車主
   const ownerEl = document.querySelector(".owner");
+  if(LINE_PROFILE){
+  renderOwnerProfile(LINE_PROFILE);
+}else{
   ownerEl.innerText = "Owner："+(data.owner || "---");
+}
 
   // 🔥 車輛資訊
   const carEl = document.querySelector(".car-info");
