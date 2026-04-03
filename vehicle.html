@@ -1178,11 +1178,9 @@ function handleData(data){
 
   // 🔥 時間軸
   renderTimeline(data.works || []);
-
-  // 🔥 綁定狀態（頁面載入時判斷）
-const plate = new URLSearchParams(window.location.search).get("plate");
-
-if(localStorage.getItem("bound_" + plate)){
+  
+// 🔥 用後端 isBound 判斷
+if(data.isBound){
 
   const bindStatus = document.getElementById("bindStatus");
   bindStatus.style.display = "inline-block";
