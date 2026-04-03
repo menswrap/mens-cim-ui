@@ -779,18 +779,18 @@ async function initLine(){
   try{
     await liff.init({ liffId: "2009682379-TbLPDrAQ" });
 
-    // ❗不是在 LINE 裡 → 直接跳出
+    // ❗不是 LINE 環境 → 直接跳出
     if(!liff.isInClient()){
-      console.log("非 LINE 環境，跳過 LINE");
       return;
     }
 
-    // ❗在 LINE 裡但沒登入 → 才登入
+    // ❗沒登入 → 不做任何事（重點）
     if(!liff.isLoggedIn()){
-      liff.login();
+      console.log("未登入 LINE，跳過");
       return;
     }
 
+    // ✅ 已登入才拿資料
     const profile = await liff.getProfile();
 
     LINE_PROFILE = {
