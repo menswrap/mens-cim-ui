@@ -1275,6 +1275,7 @@ renderTimeline(data.works || []);
   }
 }
 
+// ===== 主卡片資料出現時序控制 =====
 window.onload = function(){
 
   const view = getViewType();
@@ -1307,11 +1308,11 @@ window.onload = function(){
 
         }, 2200); // shine duration
 
-      }, 260); // show → shine 間隔
+      }, 620); // show → shine 間隔
 
     }, 620); // s1 → s3 間隔
 
-  }, 3900);
+  }, 1900);
 
 };
 
