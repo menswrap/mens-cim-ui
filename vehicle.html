@@ -1170,6 +1170,11 @@ function handleData(data){
     return;
   }
 
+  // 🔥 顯示 LINE 使用者（放最前面）
+if(LINE_PROFILE){
+  renderOwnerProfile(LINE_PROFILE);
+}
+
   // 🔥 主資料
   renderData(data);
 
