@@ -361,20 +361,20 @@ body::before {
   top: 50%;
   transform: translateY(-50%);
 
-  width: 40%;        /* 🔥 收窄（不要68%） */
-  height: 110%;      /* 🔥 降低高度 */
+  width: 68%;        /* 🔥 收窄（不要68%） */
+  height: 130%;      /* 🔥 降低高度 */
 
   background: radial-gradient(
     ellipse at center,
-    rgba(255,255,255,0.6) 0%,
-    rgba(255,255,255,0.35) 20%,
-    rgba(255,255,255,0.12) 40%,
-    rgba(255,255,255,0.03) 60%,
-    rgba(255,255,255,0) 80%
-  );
+    rgba(255,255,255,1) 0%,     /* 🔥 中心拉滿 */
+  rgba(255,255,255,0.8) 15%,  /* 🔥 提亮核心區 */
+  rgba(255,255,255,0.4) 35%,
+  rgba(255,255,255,0.1) 55%,
+  rgba(255,255,255,0) 75%
+);
 
   filter: blur(8px);   /* 🔥 模糊改柔，不要硬 */
-  opacity: 0.7;
+  opacity: 0.9;
 
   pointer-events: none;
 
@@ -1279,7 +1279,7 @@ window.onload = function(){
   // 讀資料
   setTimeout(() => {
   loadData();
-}, 4100);  // 延遲讀資料時間
+}, 4900);  // 延遲讀資料時間
 
   // sloagn 動畫
   const s1 = document.querySelector(".s1");
