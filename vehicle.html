@@ -324,7 +324,7 @@ body::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: textShine 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: textShine 2.6s cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: none;
 }
 
@@ -1070,7 +1070,7 @@ function showToast(msg){
 
   setTimeout(() => {
     t.classList.remove("show");
-  }, 2600);  // toast 停留時間
+  }, 2260);  // toast 停留時間
 }
   
 // ===== 切車（先佔位）=====
@@ -1306,13 +1306,13 @@ window.onload = function(){
           // ⑤ 最後才載資料（畫面穩定後）
           loadData();
 
-        }, 2200); // shine duration
+        }, 2600); // shine duration
 
-      }, 620); // show → shine 間隔
+      }, 900); // show → shine 間隔
 
-    }, 620); // s1 → s3 間隔
+    }, 900); // s1 → s3 間隔
 
-  }, 1900);
+  }, 2800);
 
 };
 
