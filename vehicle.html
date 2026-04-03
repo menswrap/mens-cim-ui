@@ -290,7 +290,8 @@ body::before {
 .s3 {
   position: relative;
   z-index: 3;
-  color: rgba(255,255,255,0.9);
+  color: #fff;
+  background: none;
   opacity: 0;
   transform: translateY(9px);
   will-change: transform, opacity;
@@ -306,23 +307,24 @@ body::before {
 
 /* 🔥 文字背景絲滑掃光 */
 .s3.shine {
-  position: relative;
   background: linear-gradient(
-  100deg,
-  rgba(255,255,255,0) 0%,
-  rgba(255,255,255,0.6) 40%,
-  rgba(255,255,255,1) 50%,
-  rgba(255,255,255,0.6) 60%,
-  rgba(255,255,255,0) 100%
-);
+    100deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.5) 45%,
+    rgba(255,255,255,1) 49%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,1) 51%,
+    rgba(255,255,255,0.5) 55%,
+    rgba(255,255,255,0) 100%
+  );
 
-  background-size: 200% auto;
-  background-position: -150% center;
+  background-size: 150% auto;
+  background-position: -120% center;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: textShine 2.6s ease-out;
+  animation: textShine 2.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .s3.shine::after {
@@ -699,7 +701,7 @@ body::before {
 
   <div class="brand-slogan">
   <div class="s1">曼司車體包膜</div>
-  <div class="s3">定義車體保護的標準</div>
+  <div class="s3">定義車體防護的標準</div>
   </div>
     
 </div>
@@ -1295,9 +1297,16 @@ window.onload = function(){
   }, 3900);
 
   const s3 = document.querySelector(".s3");
+
+setTimeout(() => {
+  s3.classList.add("shine");
+
+  // 🔥 放在這裡（關鍵）
   setTimeout(() => {
-    s3.classList.add("show");
-  }, 4900);
+    s3.classList.remove("shine");
+  }, 2600); // 跟animation 時間一致
+
+}, 4900);
 
   setTimeout(() => {
     s3.classList.add("shine");
