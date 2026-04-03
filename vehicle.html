@@ -322,7 +322,7 @@ body::before {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: textShine 2.6s ease-out forwards;
+  animation: textShine 2.6s ease-out;
 }
 
 .s3.shine::after {
@@ -401,8 +401,17 @@ body::before {
 }
   
 @keyframes textShine {
-  0%   { background-position: -100% center; }
-  100% { background-position: 100% center; }
+  0% {
+    background-position: -120% center;
+  }
+
+  80% {
+    background-position: 100% center;
+  }
+
+  100% {
+    background-position: 100% center;
+  }
 }
   
 @keyframes smoothShine {
