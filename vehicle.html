@@ -772,6 +772,27 @@ body::before {
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
 <script>
+// ===== 讀LINE用戶頭像和名稱 =====
+let LINE_PROFILE = null;
+
+async function initLine(){
+  try{
+    await liff.init({ liffId: "2009682379-TbLPDrAQ" });
+
+    if(liff.isLoggedIn()){
+      const profile = await liff.getProfile();
+
+      LINE_PROFILE = {
+        name: profile.displayName,
+        avatar: profile.pictureUrl,
+        userId: profile.userId
+      };
+    }
+
+  }catch(e){
+    console.log("LIFF init 失敗", e);
+  }
+}  
 
 // ===== 分辨 客戶 / 技師 =====
 function getViewType(){
@@ -1243,10 +1264,8 @@ async function loadData(){
     console.log("API資料：", data);
     
     renderData(data);
-    const profile = await loadLineProfile();
-
-if(profile){
-  renderOwnerProfile(profile);
+    if(LINE_PROFILE){
+  renderOwnerProfile(LINE_PROFILE);
 }
     renderWarranty(data.materials || []);
 renderTimeline(data.works || []);
@@ -1270,6 +1289,7 @@ renderTimeline(data.works || []);
 // ===== 主卡片資料出現時序控制 =====
 window.onload = function(){
 
+  await initLine(); // 載入用戶頭像和名稱
   const view = getViewType();
 
   if(view.type === "tech"){
