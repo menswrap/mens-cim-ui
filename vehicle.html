@@ -357,28 +357,30 @@ body::before {
   z-index: 2;
   content: "";
   position: absolute;
-  left: -60%;
+  left: -40%;
   top: 50%;
   transform: translateY(-50%);
 
-  width: 68%;          /* 43% → 收窄，集中光 */
-  height: 150%;        /* 140% → 不讓光往上下炸 */
+  width: 40%;        /* 🔥 收窄（不要68%） */
+  height: 110%;      /* 🔥 降低高度 */
 
   background: radial-gradient(
-  ellipse at center,
-  rgba(255,255,255,1) 0%,
-  rgba(255,255,255,0.6) 15%,
-  rgba(255,255,255,0.25) 35%,
-  rgba(255,255,255,0.08) 55%,
-  rgba(255,255,255,0) 75%
-);
+    ellipse at center,
+    rgba(255,255,255,0.6) 0%,
+    rgba(255,255,255,0.35) 20%,
+    rgba(255,255,255,0.12) 40%,
+    rgba(255,255,255,0.03) 60%,
+    rgba(255,255,255,0) 80%
+  );
 
-  filter: blur(2px);
-opacity: 0.6;
+  filter: blur(8px);   /* 🔥 模糊改柔，不要硬 */
+  opacity: 0.7;
 
-  animation: glowPass 3.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+
+  animation: glowPass 3.1s ease-out forwards;
 }
-
+  
 @keyframes glowPass {
   0% {
     left: -60%;
