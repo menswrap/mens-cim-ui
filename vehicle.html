@@ -1298,8 +1298,9 @@ function loadData(){
 
   const url =
     "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
-    + "?plate=" + encodeURIComponent(plate)
-    + "&callback=handleData";
+   + "?plate=" + encodeURIComponent(plate)
+   + "&userId=" + encodeURIComponent(LINE_PROFILE?.userId || "")
+   + "&callback=handleData";
 
   const script = document.createElement("script");
   script.src = url;
