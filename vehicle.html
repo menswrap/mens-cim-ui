@@ -1190,7 +1190,7 @@ function handleData(data){
     btn.style.display = "none";
   }
 
-  // 🔥🔥🔥 多車下拉（拉出來！）
+  // 🔥 多車下拉 + 切換（完整版）
   if(data.cars && data.cars.length > 1){
 
     const select = document.getElementById("carSelect");
@@ -1206,24 +1206,23 @@ function handleData(data){
     });
 
     select.value = data.plate;
+
+    // ✅🔥 切換車輛（一定要在這裡）
+    select.onchange = function(){
+
+      const newPlate = this.value;
+
+      const userId = LINE_PROFILE?.userId || "";
+
+      window.location.href =
+        window.location.pathname +
+        "?plate=" + encodeURIComponent(newPlate) +
+        "&userId=" + encodeURIComponent(userId);
+
+    };
   }
-  
-// 🔥 切換車輛
-select.onchange = function(){
-
-  const newPlate = this.value;
-
-  // 保留 userId（很重要）
-  const userId = LINE_PROFILE?.userId || "";
-
-  window.location.href =
-    window.location.pathname +
-    "?plate=" + encodeURIComponent(newPlate) +
-    "&userId=" + encodeURIComponent(userId);
-
-};
 }
-
+  
 function formatDate(d){
   if(!d) return "";
 
