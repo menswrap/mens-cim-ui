@@ -230,7 +230,7 @@ body {
 .toast {
   position:fixed;
   left:50%;
-  transform:translateX(-50%) translateY(-10px);  /* 🔥 預設往上 */
+  transform:translateX(-50%) translateY(-10px);  /* 🔥 向下浮出 */
 
   opacity: 0;
   visibility: hidden;   /* 🔥 用這個取代 display:none */
@@ -750,7 +750,7 @@ opacity: 0.9;
 
 <!-- Toast -->
 <div class="toast" id="toast">
-  請使用 LINE 掃描 QR Code 才可綁定
+  請使用 LINE 掃描 QR Code 綁定
 </div>
 
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -1277,16 +1277,16 @@ window.onload = function(){
   const s1 = document.querySelector(".s1");
   setTimeout(() => {
     s1.classList.add("show");
-  }, 5500);
+  }, 5000);
 
   const s3 = document.querySelector(".s3");
   setTimeout(() => {
     s3.classList.add("show");
-  }, 6000);
+  }, 5500);
 
   setTimeout(() => {
     s3.classList.add("shine");
-  }, 6800);
+  }, 6200);
 };
 
 // ===== 抓用戶資料資料 =====  
