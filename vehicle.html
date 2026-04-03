@@ -354,8 +354,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
 
-  width: 68%;          /* 原 43% → 收窄，集中光 */
-  height: 150%;        /* 原 140% → 不讓光往上下炸 */
+  width: 68%;          /* 43% → 收窄，集中光 */
+  height: 150%;        /* 140% → 不讓光往上下炸 */
 
   background: radial-gradient(
   ellipse at center,
@@ -609,23 +609,6 @@ opacity: 0.9;
     transform: scale(1);
     opacity: 0.9;
     filter: brightness(0.91);
-  }
-}
-
-  /* 掃光動畫 */ 
-@keyframes shineSafe {
-  0% {
-    background-position: -150% center;
-    opacity: 0;
-  }
-
-  20% {
-    opacity: 1;
-  }
-
-  100% {
-    background-position: 150% center;
-    opacity: 0;
   }
 }
   
