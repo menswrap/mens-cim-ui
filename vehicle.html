@@ -692,6 +692,9 @@ body::before {
   <!-- 車牌 -->
   <div class="plate-big"></div>
 
+  <!-- 🔥 多車選單（加這裡） -->
+<select id="carSelect" style="margin-top:10px; display:none;"></select>
+
   <!-- 車主 -->
   <div class="owner">
     Owner：尊貴的車主
@@ -1174,16 +1177,34 @@ function handleData(data){
   // 🔥 時間軸
   renderTimeline(data.works || []);
 
-// 🔥 用後端 isBound 判斷
-if(data.isBound){
+  // 🔥 綁定狀態
+  if(data.isBound){
 
-  const bindStatus = document.getElementById("bindStatus");
-  bindStatus.style.display = "inline-block";
-  bindStatus.classList.add("show");
+    const bindStatus = document.getElementById("bindStatus");
+    bindStatus.style.display = "inline-block";
+    bindStatus.classList.add("show");
 
-  const btn = document.getElementById("bindBtn");
-  btn.style.display = "none";
-}
+    const btn = document.getElementById("bindBtn");
+    btn.style.display = "none";
+  }
+
+  // 🔥🔥🔥 多車下拉（拉出來！）
+  if(data.cars && data.cars.length > 1){
+
+    const select = document.getElementById("carSelect");
+
+    select.style.display = "block";
+    select.innerHTML = "";
+
+    data.cars.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p;
+      select.appendChild(opt);
+    });
+
+    select.value = data.plate;
+  }
 
 }
 
