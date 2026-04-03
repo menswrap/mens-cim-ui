@@ -312,7 +312,7 @@ body {
   );
 
   background-size: 100% auto;
-  background-position: -113% center;
+  background-position: -50% center;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -397,7 +397,7 @@ opacity: 0.9;
     background-position: -100% center;
   }
   100% {
-    background-position: 100% center;
+    background-position: 50% center;
   }
 }
   
@@ -1042,7 +1042,7 @@ if(isLine()){
 }else{
   setTimeout(() => {
     showToast("請使用 LINE 掃描 QR Code 綁定");
-  }, 2500);
+  }, 1300);
 }
 
 // ===== Toast =====
@@ -1273,22 +1273,22 @@ window.onload = function(){
   // 讀資料
   setTimeout(() => {
   loadData();
-}, 6500);  // 延遲讀資料時間
+}, 5000);  // 延遲讀資料時間
 
   // sloagn 動畫
   const s1 = document.querySelector(".s1");
   setTimeout(() => {
     s1.classList.add("show");
-  }, 5000);
+  }, 3900);
 
   const s3 = document.querySelector(".s3");
   setTimeout(() => {
     s3.classList.add("show");
-  }, 5500);
+  }, 4900);
 
   setTimeout(() => {
     s3.classList.add("shine");
-  }, 6200);
+  }, 5900);
 };
 
 // ===== 抓用戶資料資料 =====  
