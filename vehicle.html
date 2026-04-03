@@ -322,8 +322,10 @@ body::before {
   background-position: -120% center;
 
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   animation: textShine 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: none;
 }
 
 .s3.shine::after {
@@ -1302,10 +1304,9 @@ setTimeout(() => {
 
   // 🔥 放在這裡（關鍵）
   setTimeout(() => {
-    s3.classList.remove("shine");
-  }, 2600); // 跟animation 時間一致
-
+  s3.classList.add("shine");
 }, 4900);
+}
 };
 
 // ===== 抓用戶資料資料 =====  
