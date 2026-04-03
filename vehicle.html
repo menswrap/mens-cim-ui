@@ -1178,6 +1178,20 @@ function handleData(data){
 
   // 🔥 時間軸
   renderTimeline(data.works || []);
+
+  // 🔥 綁定狀態（頁面載入時判斷）
+const plate = new URLSearchParams(window.location.search).get("plate");
+
+if(localStorage.getItem("bound_" + plate)){
+
+  const bindStatus = document.getElementById("bindStatus");
+  bindStatus.style.display = "inline-block";
+  bindStatus.classList.add("show");
+
+  const btn = document.getElementById("bindBtn");
+  btn.style.display = "none";
+
+}
 }
 
 function formatDate(d){
