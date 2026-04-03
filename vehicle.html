@@ -1279,9 +1279,6 @@ window.onload = function(){
 
   const view = getViewType();
 
-  console.log("模式:", view);
-
-  // 技師模式
   if(view.type === "tech"){
     document.body.classList.add("tech-mode");
   }
@@ -1297,19 +1294,23 @@ window.onload = function(){
     s1.classList.add("show");
   }, 3900);
 
-  // slogan 第二段（重點🔥）
+  // slogan 第二段
   const s3 = document.querySelector(".s3");
 
+  // 🔥 先顯示
+  setTimeout(() => {
+    s3.classList.add("show");
+  }, 4800);
+
+  // 🔥 再掃光
   setTimeout(() => {
     s3.classList.add("shine");
 
-    // 👉 掃完要拿掉（關鍵）
     setTimeout(() => {
-      s3.classList.add("show");
       s3.classList.remove("shine");
-    }, 2200); // 要跟 CSS animation 時間一致
+    }, 2200);
 
-  }, 4900);
+  }, 5000);
 
 };
 
