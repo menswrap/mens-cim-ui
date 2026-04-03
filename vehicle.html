@@ -1170,6 +1170,8 @@ function getPlateFromURL(){
 
 function handleData(data){
 
+  window._DATA_READY = true;
+
   if(data.error){
     showToast("查無資料");
     return;
