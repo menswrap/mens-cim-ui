@@ -1288,25 +1288,28 @@ window.onload = function(){
 
   // 讀資料
   setTimeout(() => {
-  loadData();
-}, 4900);  // 延遲讀資料時間
+    loadData();
+  }, 4900);
 
-  // sloagn 動畫
+  // slogan 第一段
   const s1 = document.querySelector(".s1");
   setTimeout(() => {
     s1.classList.add("show");
   }, 3900);
 
+  // slogan 第二段（重點🔥）
   const s3 = document.querySelector(".s3");
 
-setTimeout(() => {
-  s3.classList.add("shine");
-
-  // 🔥 放在這裡（關鍵）
   setTimeout(() => {
-  s3.classList.add("shine");
-}, 4900);
-}
+    s3.classList.add("shine");
+
+    // 👉 掃完要拿掉（關鍵）
+    setTimeout(() => {
+      s3.classList.remove("shine");
+    }, 2200); // 要跟 CSS animation 時間一致
+
+  }, 4900);
+
 };
 
 // ===== 抓用戶資料資料 =====  
