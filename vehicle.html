@@ -1307,10 +1307,10 @@ function loadData(){
   const plate = params.get("plate");
   const mode = params.get("mode");
 
-  if(!plate){
-    showToast("缺少車牌參數");
-    return;
-  }
+  if(!plate && mode !== "mycar"){
+  showToast("缺少車牌參數");
+  return;
+}
 
   let url =
   "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
