@@ -1287,8 +1287,7 @@ renderTimeline(data.works || []);
 }
 
 // ===== 主卡片資料出現時序控制 =====
-window.onload = function(){
-
+window.onload = async function(){
   await initLine(); // 載入用戶頭像和名稱
   const view = getViewType();
 
