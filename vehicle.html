@@ -822,15 +822,16 @@ function getParam(params, key){
   return null;
 }
   
-// ===== 分辨 客戶 / 技師 =====
+// ===== 分辨 技師 / 綁定客戶 / 一般客戶=====
 function getViewType(){
 
   const params = new URLSearchParams(window.location.search);
 
   const plate = getParam(params, "plate");
   const vehicleId = getParam(params, "VehicleID");
+  const mode = getParam(params, "mode");
 
-  // 技師模式
+  // 🔥 技師模式（最高優先）
   if(vehicleId){
     return {
       type: "tech",
@@ -838,7 +839,15 @@ function getViewType(){
     };
   }
 
-  // 客戶模式
+  // 🔥 LINE 多車模式
+  if(mode === "mycar"){
+    return {
+      type: "mycar",
+      value: ""
+    };
+  }
+
+  // 🔥 客戶模式
   if(plate){
     return {
       type: "customer",
@@ -851,13 +860,7 @@ function getViewType(){
     value: ""
   };
 }
-
-  return {
-    type: "unknown",
-    value: ""
-  };
-}
-
+  
 // ===== renderOwnerProfile =====
 function renderOwnerProfile(profile){
 
