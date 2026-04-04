@@ -800,6 +800,13 @@ async function initLine(){
   }
 }  
 
+// 🔥 統一參數（防大小寫）
+function getParam(params, key){
+  return params.get(key)
+      || params.get(key.toLowerCase())
+      || params.get(key.toUpperCase());
+}
+  
 // ===== 分辨 客戶 / 技師 =====
 function getViewType(){
 
@@ -1306,9 +1313,9 @@ function loadData(){
 
   const params = new URLSearchParams(window.location.search);
 
-const plate = params.get("plate");
-const mode = params.get("mode");
-const vehicleId = params.get("VehicleID");
+const plate = getParam(params, "plate");
+const mode = getParam(params, "mode");
+const vehicleId = getParam(params, "VehicleID");
 
 // 🔥 防呆（只擋客戶模式）
 if(!plate && !vehicleId && mode !== "mycar"){
