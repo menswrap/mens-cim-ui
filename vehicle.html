@@ -827,9 +827,8 @@ function getViewType(){
 
   const params = new URLSearchParams(window.location.search);
 
-  const plate = params.get("plate");
-  const vehicleId =
-  params.get("VehicleID") || params.get("vehicleId");
+  const plate = getParam(params, "plate");
+  const vehicleId = getParam(params, "VehicleID");
 
   // 技師模式
   if(vehicleId){
@@ -846,6 +845,12 @@ function getViewType(){
       value: plate
     };
   }
+
+  return {
+    type: "unknown",
+    value: ""
+  };
+}
 
   return {
     type: "unknown",
