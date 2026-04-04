@@ -802,9 +802,24 @@ async function initLine(){
 
 // 🔥 統一參數（防大小寫）
 function getParam(params, key){
-  return params.get(key)
-      || params.get(key.toLowerCase())
-      || params.get(key.toUpperCase());
+
+  const keys = [
+    key,
+    key.toLowerCase(),
+    key.toUpperCase(),
+
+    // 🔥 常見變形（重點）
+    key.charAt(0).toLowerCase() + key.slice(1), // VehicleID → vehicleID
+    key.replace("ID","Id"),                    // VehicleID → VehicleId
+    key.replace("ID","id"),                    // VehicleID → Vehicleid
+  ];
+
+  for(let k of keys){
+    const v = params.get(k);
+    if(v && v !== "") return v;
+  }
+
+  return null;
 }
   
 // ===== 分辨 客戶 / 技師 =====
