@@ -764,7 +764,7 @@ body::before {
   
 <!-- cta-bar 頁尾按紐-->
 <div class="cta-bar">
-  <button class="btn">立即預約 LINE 客服</button>
+  <button class="btn" onclick="openLine()">立即預約 LINE 客服</button>
 </div>
 
 <!-- Toast -->
@@ -1416,6 +1416,13 @@ window.onload = async function(){
   }, 2800);
 
 };
+
+function openLine(){
+
+  const url = "https://line.me/R/ti/p/@mens.stu; // 官方LINE帳號
+
+  window.open(url, "_blank");
+}
   
 </script>
 
