@@ -1104,15 +1104,6 @@ function isLine(){
   return navigator.userAgent.includes("Line");
 }
 
-// ===== 綁定按鈕控制 =====
-if(isLine()){
-  document.getElementById("bindBtn").style.display="block";
-}else{
-  setTimeout(() => {
-    showToast("請使用 LINE 掃描 QR Code 綁定");
-  }, 1300);
-}
-
 // ===== Toast =====
 function showToast(msg){
   const t = document.getElementById("toast");
@@ -1378,6 +1369,15 @@ document.body.appendChild(script);
 
 // ===== 主卡片資料出現時序控制 =====
 window.onload = async function(){
+// 🔥 先處理LINE環境
+  if(isLine()){
+    document.getElementById("bindBtn").style.display="block";
+  }else{
+    setTimeout(() => {
+      showToast("請使用 LINE 掃描 QR Code 綁定");
+    }, 1300);
+  }
+  
   await initLine(); // 載入用戶頭像和名稱
   const view = getViewType();
 
