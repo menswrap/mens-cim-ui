@@ -1304,24 +1304,35 @@ if(metaEl){
 function loadData(){
 
   const params = new URLSearchParams(window.location.search);
-  const plate = params.get("plate");
-  const mode = params.get("mode");
 
-  if(!plate && mode !== "mycar"){
+const plate = params.get("plate");
+const mode = params.get("mode");
+const vehicleId = params.get("VehicleID");
+
+// 🔥 防呆（只擋客戶模式）
+if(!plate && !vehicleId && mode !== "mycar"){
   showToast("缺少車牌參數");
   return;
 }
 
-  let url =
-  "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
+let url =
+"https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
 
-if(mode === "mycar"){
+// 🔥 技師模式（最高優先）
+if(vehicleId){
+
+  url += "?VehicleID=" + encodeURIComponent(vehicleId)
+       + "&callback=handleData";
+
+// 🔥 LINE 多車
+}else if(mode === "mycar"){
 
   const userId = LINE_PROFILE?.userId || "";
 
   url += "?userId=" + encodeURIComponent(userId)
        + "&callback=handleData";
 
+// 🔥 客戶 QR
 }else{
 
   url += "?plate=" + encodeURIComponent(plate)
@@ -1329,10 +1340,9 @@ if(mode === "mycar"){
        + "&callback=handleData";
 }
 
-  const script = document.createElement("script");
-  script.src = url;
-
-  document.body.appendChild(script);
+const script = document.createElement("script");
+script.src = url;
+document.body.appendChild(script);
 }
 
 // ===== 主卡片資料出現時序控制 =====
