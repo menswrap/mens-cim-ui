@@ -806,7 +806,8 @@ function getViewType(){
   const params = new URLSearchParams(window.location.search);
 
   const plate = params.get("plate");
-  const vehicleId = params.get("VehicleID");
+  const vehicleId =
+  params.get("VehicleID") || params.get("vehicleId");
 
   // 技師模式
   if(vehicleId){
