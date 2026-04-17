@@ -1363,9 +1363,14 @@ if(vehicleId){
 // 🔥 客戶 QR
 }else{
 
-  url += "?plate=" + encodeURIComponent(plate)
-       + "&userId=" + encodeURIComponent(LINE_PROFILE?.userId || "")
-       + "&callback=handleData";
+  let urlParams = "?plate=" + encodeURIComponent(plate);
+
+  // ✅ 只有在 LINE 裡面才帶 userId
+  if(isLine() && LINE_PROFILE?.userId){
+    urlParams += "&userId=" + encodeURIComponent(LINE_PROFILE.userId);
+  }
+
+  url += urlParams + "&callback=handleData";
 }
 
 const script = document.createElement("script");
