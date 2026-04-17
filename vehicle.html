@@ -1421,12 +1421,12 @@ window.onload = async function(){
   const s1 = document.querySelector(".s1");
   const s3 = document.querySelector(".s3");
 
-  // ✅ 🔥 1. 先跑「輕動畫」
-  setTimeout(() => s1.classList.add("show"), 200);
-  setTimeout(() => s3.classList.add("show"), 400);
-
-  // ✅ 🔥 2. 同時背景載資料（不阻塞動畫）
+  // ✅ 🔥 1. 先跑背景載資料（不阻塞動畫）
   loadData();
+  
+  // ✅ 🔥 2. 同時「輕動畫」
+  setTimeout(() => s1.classList.add("show"), 490); //S1時間
+  setTimeout(() => s3.classList.add("show"), 670); //s3時間
 };
 
 function openLine(){
