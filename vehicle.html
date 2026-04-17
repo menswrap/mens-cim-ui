@@ -775,6 +775,12 @@ body::before {
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
 <script>
+
+  // 🔥 一進來先備份（超重要）
+const RAW_QUERY = window.location.search;
+
+let LINE_PROFILE = null;
+  
 // ===== 讀LINE用戶頭像和名稱 =====
 async function initLine(){
 
@@ -789,9 +795,11 @@ async function initLine(){
 
     // 🔥 只有在 LINE 才登入
     if(!liff.isLoggedIn()){
-      liff.login();
-      return;
-    }
+  liff.login({
+    redirectUri: window.location.origin + window.location.pathname + RAW_QUERY
+  });
+  return;
+}
 
     const profile = await liff.getProfile();
 
@@ -1337,11 +1345,14 @@ const plate = getParam(params, "plate");
 const mode = getParam(params, "mode");
 const vehicleId = getParam(params, "VehicleID");
 
-// 🔥 防呆（只擋客戶模式）
-if(!plate && !vehicleId && mode !== "mycar"){
-  showToast("缺少車牌參數");
-  return;
-}
+ // ❗ 客戶模式防呆（等0.3秒 return）
+  if(!plate && !vehicleId && mode !== "mycar"){
+
+    console.log("⚠️ 第一次沒抓到參數，延遲再試");
+
+    setTimeout(loadData, 300); // 🔥 關鍵
+    return;
+  }
 
 let url =
 "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
