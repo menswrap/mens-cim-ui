@@ -776,12 +776,18 @@ body::before {
 
 <script>
 // ===== 讀LINE用戶頭像和名稱 =====
-let LINE_PROFILE = null;
-
 async function initLine(){
+
+  // ❌ 不是 LINE 環境 → 直接跳過
+  if(!isLine()){
+    console.log("非 LINE 環境，略過 LIFF");
+    return;
+  }
+
   try{
     await liff.init({ liffId: "2009682379-TbLPDrAQ" });
 
+    // 🔥 只有在 LINE 才登入
     if(!liff.isLoggedIn()){
       liff.login();
       return;
@@ -1370,13 +1376,12 @@ document.body.appendChild(script);
 // ===== 主卡片資料出現時序控制 =====
 window.onload = async function(){
 // 🔥 先處理LINE環境
-  if(isLine()){
-    document.getElementById("bindBtn").style.display="block";
-  }else{
-    setTimeout(() => {
-      showToast("請使用 LINE 掃描 QR Code 綁定");
-    }, 1300);
-  }
+ if(isLine()){
+  document.getElementById("bindBtn").style.display="block";
+}else{
+  // ❌ 不要再提示登入
+  console.log("瀏覽器模式");
+}
   
   await initLine(); // 載入用戶頭像和名稱
   const view = getViewType();
