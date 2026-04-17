@@ -1215,6 +1215,18 @@ function handleData(data){
   // 🔥 時間軸
   renderTimeline(data.works || []);
 
+        // 🔥 重動畫：資料回來才跑（高級感關鍵）
+setTimeout(() => {
+  const s3 = document.querySelector(".s3");
+
+  s3.classList.add("shine");
+
+  setTimeout(() => {
+    s3.classList.remove("shine");
+  }, 1800);
+
+}, 200);
+
   // 🔥 綁定狀態
   if(data.isBound){
 
@@ -1254,18 +1266,6 @@ function handleData(data){
         window.location.pathname +
         "?plate=" + encodeURIComponent(newPlate) +
         "&userId=" + encodeURIComponent(userId);
-
-      // 🔥 重動畫：資料回來才跑（高級感關鍵）
-setTimeout(() => {
-  const s3 = document.querySelector(".s3");
-
-  s3.classList.add("shine");
-
-  setTimeout(() => {
-    s3.classList.remove("shine");
-  }, 1800);
-
-}, 200);
 
     };
   }
