@@ -1255,6 +1255,18 @@ function handleData(data){
         "?plate=" + encodeURIComponent(newPlate) +
         "&userId=" + encodeURIComponent(userId);
 
+      // 🔥 重動畫：資料回來才跑（高級感關鍵）
+setTimeout(() => {
+  const s3 = document.querySelector(".s3");
+
+  s3.classList.add("shine");
+
+  setTimeout(() => {
+    s3.classList.remove("shine");
+  }, 1800);
+
+}, 200);
+
     };
   }
 }
@@ -1391,17 +1403,17 @@ document.body.appendChild(script);
 
 // ===== 主卡片資料出現時序控制 =====
 window.onload = async function(){
-// 🔥 先處理LINE環境
- if(isLine()){
-  document.getElementById("bindBtn").style.display="block";
-}else{
-  // ❌ 不要再提示登入
-  console.log("瀏覽器模式");
-}
-  
-  await initLine(); // 載入用戶頭像和名稱
-  const view = getViewType();
 
+  // 🔥 LINE 判斷
+  if(isLine()){
+    document.getElementById("bindBtn").style.display="block";
+  }else{
+    console.log("瀏覽器模式");
+  }
+
+  await initLine();
+
+  const view = getViewType();
   if(view.type === "tech"){
     document.body.classList.add("tech-mode");
   }
@@ -1409,33 +1421,12 @@ window.onload = async function(){
   const s1 = document.querySelector(".s1");
   const s3 = document.querySelector(".s3");
 
-  // ① 第一段 slogan
-  setTimeout(() => {
-    s1.classList.add("show");
+  // ✅ 🔥 1. 先跑「輕動畫」
+  setTimeout(() => s1.classList.add("show"), 200);
+  setTimeout(() => s3.classList.add("show"), 400);
 
-    // ② 第二段 slogan 出現
-    setTimeout(() => {
-      s3.classList.add("show");
-
-      // ③ 掃光開始
-      setTimeout(() => {
-        s3.classList.add("shine");
-
-        // ④ 掃光結束
-        setTimeout(() => {
-          s3.classList.remove("shine");
-
-          // ⑤ 最後才載資料（畫面穩定後）
-          loadData();
-
-        }, 1900); // shine duration
-
-      }, 900); // show → shine 間隔
-
-    }, 900); // s1 → s3 間隔
-
-  }, 2800);
-
+  // ✅ 🔥 2. 同時背景載資料（不阻塞動畫）
+  loadData();
 };
 
 function openLine(){
