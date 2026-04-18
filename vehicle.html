@@ -274,6 +274,13 @@ body::before {
   100% { opacity:1; }
 }
 
+/* ✅ S3等資料期間呼吸感 */
+@keyframes subtlePulse {
+  0%   { opacity: 0.72; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.72; }
+}
+  
  /* sloagn 第一句*/ 
 .s1 {
   opacity: 0;
@@ -303,6 +310,9 @@ body::before {
   transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 
   text-shadow: 0 0 4px rgba(255,255,255,0.5);
+
+  /* 🔥 加這行（關鍵） */
+  animation: subtlePulse 2.2s ease-in-out infinite;
 }
 
 /* 🔥 文字背景絲滑掃光 */
@@ -1217,10 +1227,19 @@ function handleData(data){
 
         // 🔥 重動畫：資料回來才跑（高級感關鍵）
 setTimeout(() => {
+
   const s3 = document.querySelector(".s3");
 
+  // ✅ 1. 停掉呼吸動畫（你剛加的 subtlePulse）
+  s3.style.animation = "none";
+
+  // ✅ 2. 強制瀏覽器重算（不然動畫不會重播）
+  void s3.offsetWidth;
+
+  // ✅ 3. 觸發 shine
   s3.classList.add("shine");
 
+  // ✅ 4. 結束後清掉（避免卡狀態）
   setTimeout(() => {
     s3.classList.remove("shine");
   }, 1900);
