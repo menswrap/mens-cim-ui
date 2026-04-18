@@ -926,6 +926,19 @@ function renderWarranty(materials){
      ⚠ 已過保固
    </div>` : "";
 
+      // 顯示保固到期日
+     const expireInfo = w.expire
+  ? `<div style="font-size:12px;color:#aaa;margin-top:4px;">
+       到期日：${formatDate(w.expire)}
+     </div>`
+  : "";
+
+     const remainInfo = w.remain && w.remain !== "已過期"
+  ? `<div style="font-size:12px;color:#aaa;">
+       剩餘：${w.remain}
+     </div>`
+  : "";
+
       const div = document.createElement("div");
       div.className="card";
 
@@ -948,8 +961,12 @@ function renderWarranty(materials){
 </div>
         </div>
 
-        <div style="font-size:12px;margin-top:4px;">${percent}%</div>
-         ${expiredLabel}
+        <<div style="font-size:12px;margin-top:4px;">${percent}%</div>
+
+${expireInfo}  //保固到期日
+${remainInfo}  //保固剩餘時間
+
+${expiredLabel}
       `;
 
       el.appendChild(div);
