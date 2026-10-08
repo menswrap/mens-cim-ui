@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MENS 車輛履歷</title>
+
+<style>
+body {
+  margin:0;
+  font-family: sans-serif;
+  color:#fff;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(15,17,21,0.82)),
+    url('IMG_2686.png');
+
+  background-size: cover;
+  background-position: center;
+
+  z-index: -1;
+}  
+.container { padding:16px; }
+
+.brand-sub {
+  font-size:11px;
+  color:rgba(255,255,255,0.4);
+  letter-spacing:2px;
+}
+
+/* Header */
+.header {
+  margin: 103px auto 90px;
+  text-align: center;
+  max-width: 520px;
+
+  position: relative;
+}
+
+.hero-card {
+  padding:30px 20px;
+
+  border-radius:20px;
+
+  background: rgba(0,0,0,0.25);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.8),
+    0 0 40px rgba(255,255,255,0.03) inset;
+}
+
+.header::before {
+  content:"";
+  position:absolute;
+  top:-80px;
+  left:50%;
+  transform:translateX(-50%);
+
+  width:500px;
+  height:300px;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,0.08),
+    transparent 70%
+  );
+
+  filter: blur(40px);
+  z-index:-1;
+}
+  
+.info-center {
+  margin-top:10px;
+}
+
+.info-center .meta {
+  font-size:12px;
+  color:#aaa;
+  margin-top:4px;
+}  
+
+.vid {
+  font-size:12px;
+  color:#aaa;
+}
+.status {
+  display:inline-block;
+  margin-top:9px;
+  font-size:13px;
+  padding:6px 12px;
+  border-radius:999px;
+
+  font-weight:600;
+  letter-spacing:0.5px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.08);
+
+  position: relative;
+
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.35s ease;
+}
+
+.status.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
+.status-badge{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+
+  color: #fff;
+  font-weight: 600;
+
+  backdrop-filter: blur(6px);
+}
+
+/* Card卡片樣式 */
+.card {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0)
+  ), rgba(20,22,28,0.35);
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:16px;
+
+  border:1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+.card:active {
+  transform: scale(0.97);
+}
+  
+/* Warranty */
+.bar-bg {
+  width:100%;
+  height:10px;
+  background:#2A2E36;
+  border-radius:999px;
+  overflow:hidden;
+
+  border:1px solid #333;/* 新增外框 */
+  position:relative;
+}
+.bar {
+  height:100%;
+  border-radius:999px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4) inset;
+}
+
+/* Footer */
+.cta-bar {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#0F1115;
+  padding:12px;
+
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+  
+.footer-cn {
+  font-size:12px;
+  color:#fff;
+  letter-spacing:1px;
+}
+
+.footer-en {
+  font-size:11px;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:2px;
+  margin-top:4px;
+}
+
+.footer-meta {
+  font-size:11px;
+  color:#aaa;
+  line-height:1.6;
+}
+
+.footer-powered {
+  font-size:10px;
+  color:rgba(255,255,255,0.35);
+}
+  
+.btn {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  background:#06C755;
+  color:#fff;
+}
+
+/* Toast */
+.toast {
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%) translateY(-10px);  /* 🔥 向下浮出 */
+
+  opacity: 0;
+  visibility: hidden;   /* 🔥 用這個取代 display:none */
+
+  top: 91px;
+  bottom: auto;
+
+  padding:10px 16px;
+
+  background: rgba(20,22,28,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border-radius:20px;
+  font-size:12px;
+
+  color: rgba(255,255,255,0.85);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.6),
+    0 0 10px rgba(255,255,255,0.05) inset;
+
+  transition: all 0.4s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);  /* 🔥 微上浮 */
+}
+  
+  @keyframes blink {
+  0% { opacity:1; }
+  50% { opacity:0.3; }
+  100% { opacity:1; }
+}
+
+/* ✅ S3等資料期間呼吸感 */
+@keyframes subtlePulse {
+  0%   { opacity: 0.72; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.72; }
+}
+  
+ /* sloagn 第一句*/ 
+.s1 {
+  opacity: 0;
+  transform: translateY(9px);
+}
+
+.s1.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease;
+}
+
+/* sloagn 主句*/ 
+.s3 {
+  position: relative;
+  z-index: 3;
+  color: #fff;
+  background: none;
+  opacity: 0;
+  transform: translateY(9px);
+  will-change: transform, opacity;
+}
+
+.s3.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+
+  text-shadow: 0 0 4px rgba(255,255,255,0.5);
+
+  /* 🔥 加這行（關鍵） */
+  animation: subtlePulse 2.2s ease-in-out infinite;
+}
+
+/* 🔥 文字背景絲滑掃光 */
+.s3.shine {
+  background: linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.5) 45%,
+    rgba(255,255,255,1) 49%,
+    rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,1) 51%,
+    rgba(255,255,255,0.5) 55%,
+    rgba(255,255,255,0) 100%
+  );
+
+  background-size: 150% auto;
+  background-position: -120% center;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: textShine 2.6s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: none;
+}
+
+.s3.shine::after {
+  display: none;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+
+  width: 40%;
+  height: 100%;
+
+  background: linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,0.25) 35%,
+    rgba(255,255,255,0.85) 50%,
+    rgba(255,255,255,0.25) 65%,
+    rgba(255,255,255,0) 80%
+  );
+
+  filter: blur(3px);
+  opacity: 0;
+
+  animation: smoothShine 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* 🔥 背後透光（高級版） */
+.s3.shine::before {
+  z-index: 2;
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 68%;        /* 🔥 收窄（不要68%） */
+  height: 130%;      /* 🔥 降低高度 */
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255,255,255,1) 0%,     /* 🔥 中心拉滿 */
+  rgba(255,255,255,0.8) 15%,  /* 🔥 提亮核心區 */
+  rgba(255,255,255,0.4) 35%,
+  rgba(255,255,255,0.1) 55%,
+  rgba(255,255,255,0) 75%
+);
+
+  filter: blur(8px);   /* 🔥 模糊改柔，不要硬 */
+  opacity: 0.9;
+
+  pointer-events: none;
+
+  animation: glowPass 3.1s ease-out forwards;
+}
+
+/* 🔥 掃光過.S3（高級版） */
+@keyframes glowPass {
+  0% {
+    left: -41%;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 78%;
+    opacity: 0;
+  }
+}
+  
+@keyframes textShine {
+  0% {
+    background-position: -120% center;
+  }
+
+  80% {
+    background-position: 100% center;
+  }
+
+  100% {
+    background-position: 100% center;
+  }
+}
+  
+@keyframes smoothShine {
+  0% {
+    left: -120%;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+  
+.danger {
+  animation: blink 1s infinite;
+  box-shadow: 0 0 8px #E53935;
+}
+
+.main {
+  background:rgba(0,0,0,0.1);
+  border-radius:20px;
+  padding:16px;
+  padding-bottom:149px;
+
+  margin-top:40px;
+}
+
+/* Header強化 */
+
+.footer-info {
+  text-align:center;
+  font-size:11px;
+  color:#888;
+  margin:40px 0 80px;
+  line-height:1.6;
+}
+
+/* 🔥 Header Ferrari版 */
+.brand-hero {
+  text-align:center;
+  margin-bottom:19px;  /* 🔥增加間距 */
+
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8));
+}
+
+.brand-hero img {
+  height:91px;
+
+  margin-bottom:6px;   /* 🔥從10 → 6（更貼近品牌） */
+
+  opacity:0.9;        /* 🔥稍微降一點 */
+
+  filter:
+    drop-shadow(0 8px 20px rgba(0,0,0,0.8))
+    drop-shadow(0 0 8px rgba(255,255,255,0.06));
+  animation: breathe 4.1s ease-in-out infinite; /* LOGO呼吸感 */
+}
+
+.brand-name {
+  font-size:14px;
+  font-weight:600;
+  margin-top:4px;
+  letter-spacing:1px;
+}
+
+.cert-title {
+  font-size:12px;
+  letter-spacing:2px;
+  color:#aaa;
+  margin-bottom:8px;
+}
+  
+.plate-big {
+  text-align:center;
+  font-size:48px;
+  font-weight:700;
+  margin-top:12px;
+  letter-spacing:6px;
+
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #f5f5f5 40%,
+    #dcdcdc 60%,
+    #ffffff 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 4px 20px rgba(0,0,0,0.8),
+    0 0 10px rgba(255,255,255,0.08);
+}
+  
+.brand-slogan {
+  margin-top:20px;
+  text-align:center;
+  line-height:1.6;
+}
+  
+@keyframes sloganFlashClean {
+
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  40% {
+    text-shadow: 0 0 12px rgba(255,255,255,0.6);
+  }
+
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 6px rgba(255,255,255,0.15);
+  }
+}
+
+/* 第一行（品牌） */
+.brand-slogan .s1 {
+  font-size:13px;
+  letter-spacing:2px;
+  color:rgba(255,255,255,0.45);
+}
+
+/* 第二行（主殺句🔥） */
+.brand-slogan .s3 {
+  font-size:19px;
+  font-weight:600;
+  letter-spacing:2px;
+  margin-top:4px;
+
+  color:#fff;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity:1;
+    transform: translateY(0);
+  }
+}
+    
+.owner {
+  text-align:center;
+  font-size:12px;
+  color:#bbb;
+  margin-top:6px;
+}
+
+.car-info {
+  text-align:center;
+  font-size:13px;
+  margin-top:4px;
+  letter-spacing:1px;
+}
+
+/* 🔥 已綁定（高質感） */
+.status-bound {
+  color: #00E676;
+  background: rgba(0,230,118,0.15);
+  border: 1px solid rgba(0,230,118,0.35);
+
+  box-shadow:
+    0 0 10px rgba(0,230,118,0.2),
+    0 0 20px rgba(0,230,118,0.05) inset;
+
+  animation: glowPulse 2s infinite alternate;
+}
+
+.meta {
+  font-size:12px;
+  color:#aaa;
+}
+
+/* 🔥 用戶（高質感） */
+.owner img {
+  border:1px solid rgba(255,255,255,0.3);
+}
+  
+.footer-sign {
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:rgba(255,255,255,0.35);
+}
+
+  @keyframes breathe {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+    filter: brightness(0.91);
+  }
+  50% {
+    transform: scale(1.013); /* 大小變化！關鍵一點點 */
+    opacity: 1;
+    filter: brightness(1.31); /* 亮度變化！多一點 */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+    filter: brightness(0.91);
+  }
+}
+  
+  @media (max-width: 768px) {
+  .header {
+    margin: 80px auto 90px;
+  }
+}
+  .tech-mode .hero-card {
+  border: 1px solid rgba(0, 230, 118, 0.25);
+}
+
+  .tech-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+
+  font-size: 10px;
+  letter-spacing: 1px;
+
+  padding: 4px 8px;
+  border-radius: 20px;
+
+  background: rgba(0, 230, 118, 0.12);
+  color: #00E676;
+
+  border: 1px solid rgba(0, 230, 118, 0.3);
+
+  box-shadow:
+    0 0 10px rgba(0, 230, 118, 0.2);
+
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.3s ease;
+}
+
+/* 🔥 只有技師模式顯示 */
+.tech-mode .tech-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container main">
+  
+  <!-- Header -->
+<div class="header">
+  <div class="hero-card">
+     <!-- 🔥 技師標籤 -->
+  <div class="tech-badge">TECH MODE</div>
+
+  <!-- 品牌主體 -->
+  <div class="brand-hero">
+    <img src="IMG_2685.png">
+    <div class="brand-name">MENS WRAP STUDIO</div>
+  </div>
+
+<div class="cert-title">
+  Certified Vehicle Protection Record
+</div>
+    
+  <!-- 車牌 -->
+  <div class="plate-big"></div>
+
+  <!-- 🔥 多車選單（加這裡） -->
+<select id="carSelect" style="margin-top:10px; display:none;"></select>
+
+  <!-- 車主 -->
+  <div class="owner">
+    Owner：尊貴的車主
+  </div>
+
+  <!-- 車輛資訊 -->
+ <div class="car-info"></div>
+
+  <div class="brand-slogan">
+  <div class="s1">曼司車體包膜</div>
+  <div class="s3">定義車體防護的標準</div>
+  </div>
+    
+</div>
+
+  <!-- 狀態 -->
+  <div class="info-center">
+  <div class="status">已完工</div>
+<div class="status status-bound" id="bindStatus" style="display:none;">
+  已綁定</div>
+  <div class="meta"></div>
+</div>
+
+  <!-- 綁定按鈕 -->
+  <button id="bindBtn" style="margin-top:10px;display:none;">
+    📱 綁定我的LINE
+  </button>
+
+</div>
+
+  <!-- Warranty -->
+  <div id="warranty"></div>
+  <div id="timeline"></div>
+
+</div>
+
+<div class="footer-info">
+
+  <!-- 中文主體 -->
+  <div class="footer-cn">
+    曼司車體包膜專業施工履歷系統
+  </div>
+
+  <!-- 英文輔助 -->
+  <div class="footer-en">
+    Certified Vehicle Protection Record
+  </div>
+
+  <br>
+
+  <div class="footer-meta">
+    Issued by MENS WRAP STUDIO<br>
+    www.menswrap.com
+  </div>
+
+  <br>
+
+  <div class="footer-powered">
+    Powered by MENS CIM System
+  </div>
+
+  <div class="footer-sign">
+  Standards Defined by MENS WRAP STUDIO
+</div>
+
+</div>
+  
+<!-- cta-bar 頁尾按紐-->
+<div class="cta-bar">
+  <button class="btn" onclick="openLine()">立即預約 LINE 客服</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  請使用 LINE 掃描 QR Code 綁定
+</div>
+
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<script>
+
+  // 🔥 一進來先備份（超重要）
+const RAW_QUERY = window.location.search;
+
+let LINE_PROFILE = null;
+  
+// ===== 讀LINE用戶頭像和名稱 =====
+async function initLine(){
+
+  // ❌ 不是 LINE 環境 → 直接跳過
+  if(!isLine()){
+    console.log("非 LINE 環境，略過 LIFF");
+    return;
+  }
+
+  try{
+    await liff.init({ liffId: "2009682379-TbLPDrAQ" });
+
+    // 🔥 只有在 LINE 才登入
+    if(!liff.isLoggedIn()){
+  liff.login({
+    redirectUri: window.location.origin + window.location.pathname + RAW_QUERY
+  });
+  return;
+}
+
+    const profile = await liff.getProfile();
+
+    LINE_PROFILE = {
+      name: profile.displayName,
+      avatar: profile.pictureUrl,
+      userId: profile.userId
+    };
+
+  }catch(e){
+    console.log("LIFF init 失敗", e);
+  }
+}  
+
+// 🔥 統一參數（防大小寫）
+function getParam(params, key){
+
+  const keys = [
+    key,
+    key.toLowerCase(),
+    key.toUpperCase(),
+
+    // 🔥 常見變形（重點）
+    key.charAt(0).toLowerCase() + key.slice(1), // VehicleID → vehicleID
+    key.replace("ID","Id"),                    // VehicleID → VehicleId
+    key.replace("ID","id"),                    // VehicleID → Vehicleid
+  ];
+
+  for(let k of keys){
+    const v = params.get(k);
+    if(v && v !== "") return v;
+  }
+
+  return null;
+}
+  
+// ===== 分辨 技師 / 綁定客戶 / 一般客戶=====
+function getViewType(){
+
+  const params = new URLSearchParams(window.location.search);
+
+  const plate = getParam(params, "plate");
+  const vehicleId = getParam(params, "VehicleID");
+  const mode = getParam(params, "mode");
+
+  // 🔥 技師模式（最高優先）
+  if(vehicleId){
+    return {
+      type: "tech",
+      value: vehicleId
+    };
+  }
+
+  // 🔥 LINE 多車模式
+  if(mode === "mycar"){
+    return {
+      type: "mycar",
+      value: ""
+    };
+  }
+
+  // 🔥 客戶模式
+  if(plate){
+    return {
+      type: "customer",
+      value: plate
+    };
+  }
+
+  return {
+    type: "unknown",
+    value: ""
+  };
+}
+  
+// ===== renderOwnerProfile =====
+function renderOwnerProfile(profile){
+
+  const ownerEl = document.querySelector(".owner");
+
+  ownerEl.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+      <img src="${profile.avatar}" 
+           style="width:26px;height:26px;border-radius:50%;">
+      <span>${profile.name}</span>
+    </div>
+  `;
+}
+  
+// ===== Render Warranty =====
+function getColor(r){
+  if(r <= 0) return "#E53935";
+  if(r <= 1/7) return "#E53935";
+  if(r <= 1/5) return "#FB8C00";
+  if(r <= 1/3) return "#C0CA33";
+  if(r <= 2/3) return "#66BB6A";
+  return "#00E676";
+}
+
+function renderWarranty(materials){
+  const el = document.getElementById("warranty");
+  el.innerHTML = "";
+
+  materials
+    .sort((a,b)=>a.bar - b.bar)
+    .forEach(w => {
+
+      const percent = w.bar;
+      const dangerClass = percent <= 0 ? "danger" : "";
+      const borderColor = getBorderColor(percent/100);
+
+      const expiredLabel = percent <= 0 ? 
+  `<div style="color:#E53935;font-size:12px;margin-top:6px;">
+     ⚠ 已過保固
+   </div>` : "";
+
+      // 顯示保固到期日
+     const expireInfo = w.expire
+  ? `<div style="font-size:12px;color:#aaa;margin-top:4px;">
+       到期日：${formatDate(w.expire)}
+     </div>`
+  : "";
+
+     const remainInfo = w.remain && w.remain !== "已過期"
+  ? `<div style="font-size:12px;color:#aaa;">
+       剩餘：${w.remain}
+     </div>`
+  : "";
+
+      const div = document.createElement("div");
+      div.className="card";
+
+      div.innerHTML = `
+        <div style="font-weight:600;font-size:15px;">
+          ${w.name} ${w.part ? `（${w.part}）` : ""}
+        </div>
+
+        <div style="font-size:12px;color:#999;margin-bottom:8px;">
+          ${w.batch ? `Batch: ${w.batch}` : ""}
+        </div>
+
+        <div class="bar-bg" style="border:1px solid ${borderColor}">
+          <div class="bar ${dangerClass}" 
+     style="
+       width:${percent <= 0 ? '100%' : percent + '%'};
+       background:${percent <= 0 ? '#E53935' : getColor(percent/100)};
+       opacity:${percent <= 0 ? '0.8' : '1'};
+     ">
+</div>
+        </div>
+
+        <div style="font-size:12px;margin-top:4px;">${percent}%</div>
+${expireInfo}
+${remainInfo}
+
+${expiredLabel}
+      `;
+
+      el.appendChild(div);
+    });
+}
+
+function renderTimeline(works){
+
+  if(!works || works.length === 0){
+    console.log("⚠️ timeline 沒資料");
+    return;
+  }
+
+  const container = document.getElementById("timeline");
+  container.innerHTML = "";
+
+  const view = getViewType();
+
+  const typeOrder = ["施工","維護","回檢/修補","其他"];
+
+  // ===== 分組：日期 → 類型 =====
+  const grouped = {};
+
+  works.forEach(w => {
+
+    const date = formatDate(w.date);
+
+    let type = w.type;
+    if(!type || type === "") type = "施工";
+
+    if(!grouped[date]) grouped[date] = {};
+    if(!grouped[date][type]) grouped[date][type] = [];
+
+    grouped[date][type].push(w);
+  });
+
+  const dates = Object.keys(grouped)
+    .sort((a,b)=> new Date(b) - new Date(a));
+
+  dates.forEach(date => {
+
+    // 日期
+    const dateEl = document.createElement("div");
+    dateEl.style.margin = "20px 0 10px";
+    dateEl.style.fontSize = "13px";
+    dateEl.style.color = "#aaa";
+    dateEl.innerText = date;
+    container.appendChild(dateEl);
+
+    const types = Object.keys(grouped[date])
+      .sort((a,b)=> typeOrder.indexOf(a) - typeOrder.indexOf(b));
+
+    types.forEach(type => {
+
+      const items = grouped[date][type];
+
+      const card = document.createElement("div");
+      card.className = "card timeline-item";
+      card.style.position = "relative";
+      card.style.paddingLeft = "20px";
+      card.style.borderLeft = "2px solid rgba(255,255,255,0.08)";
+
+      // 左側點
+      const dot = document.createElement("div");
+      dot.style.position = "absolute";
+      dot.style.left = "-6px";
+      dot.style.top = "18px";
+      dot.style.width = "10px";
+      dot.style.height = "10px";
+      dot.style.borderRadius = "50%";
+      dot.style.background = "#00E676";
+      dot.style.boxShadow = "0 0 8px rgba(0,230,118,0.6)";
+      card.appendChild(dot);
+
+      // 類型
+      const title = document.createElement("div");
+      title.style.fontSize = "13px";
+      title.style.marginBottom = "6px";
+      title.style.color = "#00E676";
+      title.innerText = `[${type}]`;
+      card.appendChild(title);
+
+      // ===== 🔥 階層分組（核心） =====
+      const groupMap = {};
+
+      items.forEach(w => {
+
+  const parts = w.item.split(" - ").map(p => p.trim());
+
+  const main = parts[0] || "";
+  const sub = parts[1] || "";
+  const action = parts[2] || "";
+
+  if(!groupMap[main]){
+    groupMap[main] = { subMap: {} };
+  }
+
+  if(!groupMap[main].subMap[sub]){
+    groupMap[main].subMap[sub] = new Set();
+  }
+
+  if(action){
+    groupMap[main].subMap[sub].add(action);
+  }else{
+    groupMap[main].subMap[sub].add("");
+  }
+
+});
+
+      // ===== render 分組 =====
+Object.keys(groupMap).forEach(main => {
+
+  // 主分類
+  const mainEl = document.createElement("div");
+  mainEl.style.fontSize = "14px";
+  mainEl.style.color = "#fff";
+  mainEl.style.marginTop = "6px";
+  mainEl.innerText = main;
+  card.appendChild(mainEl);
+
+  // 子分類
+  Object.keys(groupMap[main].subMap).forEach(sub => {
+
+    const actions = Array.from(groupMap[main].subMap[sub])
+      .filter(a => a);
+
+    const text = actions.length > 0
+      ? `${sub} - ${actions.join(" / ")}`
+      : sub;
+
+    const subEl = document.createElement("div");
+    subEl.style.fontSize = "13px";
+    subEl.style.color = "#ccc";
+    subEl.style.marginLeft = "10px";
+    subEl.innerText = `- ${text}`;
+
+    card.appendChild(subEl);
+
+  });
+
+});
+
+      // ===== 技師（右下）=====
+      const techSet = new Set();
+
+      items.forEach(w => {
+        const name = view.type === "tech"
+          ? (w.techFull || w.tech)
+          : w.tech;
+
+        if(name) techSet.add(name);
+      });
+
+      const techBox = document.createElement("div");
+      techBox.style.marginTop = "10px";
+      techBox.style.textAlign = "right";
+      techBox.style.fontSize = "12px";
+      techBox.style.color = "#aaa";
+
+      techSet.forEach(t => {
+        const line = document.createElement("div");
+        line.innerText = t;
+        techBox.appendChild(line);
+      });
+
+      card.appendChild(techBox);
+
+      container.appendChild(card);
+    });
+
+  });
+}
+  
+// ===== LINE 判斷 =====
+function isLine(){
+  return navigator.userAgent.includes("Line");
+}
+
+// ===== Toast =====
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.innerText = msg;
+
+  t.classList.add("show");
+
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, 2260);  // toast 停留時間
+}
+  
+// ===== 切車（先佔位）=====
+function toggleCars(){
+  alert("未來這裡做切車");
+}
+
+// ===== 血條外框 =====  
+function getBorderColor(r){
+  if(r <= 0) return "#E53935";     // 過期
+  if(r <= 1/7) return "#E53935";   // 危險
+  if(r <= 1/5) return "#FB8C00";   // 警告
+  return "#333";
+}  
+  
+// ===== 綁定 LINE和車輛=====
+document.getElementById("bindBtn").onclick = async function(){
+
+  const btn = document.getElementById("bindBtn");
+  if(btn.dataset.binding === "1") return;
+  btn.dataset.binding = "1";
+  btn.disabled = true;
+  btn.textContent = "📱 綁定中…";
+
+  try{
+    if(!liff.isLoggedIn()){
+      liff.login();
+      return;
+    }
+
+    let profile = LINE_PROFILE;
+
+    // 🔥 LIFF Token 過期防呆
+    // liff.isLoggedIn() 可能仍回傳 true，但 access token 已經過期，
+    // 此時 getProfile() 會直接拋出「The access token expired」。
+    if(!profile){
+      try{
+        profile = await liff.getProfile();
+      }catch(profileErr){
+        const msg = String(profileErr?.message || profileErr || "").toLowerCase();
+        const tokenExpired = msg.includes("access token") && msg.includes("expired");
+
+        if(tokenExpired){
+          console.log("⚠️ LIFF access token 已過期，重新登入");
+          try{ liff.logout(); }catch(e){}
+          liff.login({
+            redirectUri: window.location.origin + window.location.pathname + window.location.search
+          });
+          return;
+        }
+
+        throw profileErr;
+      }
+    }
+
+    const userId = profile.userId;
+    const name = profile.displayName || "";
+
+    const params = new URLSearchParams(window.location.search);
+    const plate = params.get("plate") || getPlateFromURL();
+
+    if(!userId || !plate || String(plate).trim() === ""){
+      throw new Error("找不到有效的 LINE ID 或車牌");
+    }
+
+    const callbackName = "__mensBindLine_" + Date.now();
+    const url = "https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec"
+      + "?action=bindLine"
+      + "&userId=" + encodeURIComponent(userId)
+      + "&name=" + encodeURIComponent(name)
+      + "&plate=" + encodeURIComponent(plate)
+      + "&callback=" + encodeURIComponent(callbackName);
+
+    await new Promise((resolve, reject) => {
+      let finished = false;
+      const script = document.createElement("script");
+
+      const cleanup = () => {
+        clearTimeout(timer);
+        delete window[callbackName];
+        if(script.parentNode) script.parentNode.removeChild(script);
+      };
+
+      const finish = (fn, value) => {
+        if(finished) return;
+        finished = true;
+        cleanup();
+        fn(value);
+      };
+
+      window[callbackName] = result => finish(resolve, result);
+      script.onerror = () => finish(reject, new Error("LINE 綁定伺服器沒有回應"));
+
+      const timer = setTimeout(() => {
+        finish(reject, new Error("LINE 綁定逾時，請稍後再試"));
+      }, 10000);
+
+      script.src = url;
+      document.body.appendChild(script);
+    }).then(result => {
+      if(result && (result.status === "success" || result.status === "already_bound")){
+        showToast(result.status === "already_bound" ? "此車輛已綁定" : "✅ 已成功綁定此車輛");
+        localStorage.setItem("bound_" + plate, "1");
+
+        btn.style.display = "none";
+        const bindStatus = document.getElementById("bindStatus");
+        bindStatus.style.display = "inline-block";
+        bindStatus.classList.add("show");
+        return;
+      }
+
+      throw new Error((result && result.message) || "綁定失敗");
+    });
+
+  }catch(err){
+    btn.disabled = false;
+    btn.dataset.binding = "0";
+    btn.textContent = "📱 綁定我的LINE";
+    alert("綁定失敗：" + err.message);
+  }
+
+}
+
+function getPlateFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("plate");
+}
+
+function handleData(data){
+
+  console.log("cars:", data.cars);
+
+  window._DATA_READY = true;
+
+  if(data.error){
+    showToast("查無資料");
+    return;
+  }
+
+  // 🔥 主資料
+  renderData(data);
+
+  // 🔥 保固
+  renderWarranty(data.materials || []);
+
+  // 🔥 時間軸
+  renderTimeline(data.works || []);
+
+        // 🔥 重動畫：資料回來才跑（高級感關鍵）
+setTimeout(() => {
+
+  const s3 = document.querySelector(".s3");
+
+  // ✅ 1. 停掉呼吸動畫（你剛加的 subtlePulse）
+  s3.style.animation = "none";
+
+  // ✅ 2. 強制瀏覽器重算（不然動畫不會重播）
+  void s3.offsetWidth;
+
+  // ✅ 3. 觸發 shine
+  s3.classList.add("shine");
+
+  // ✅ 4. 結束後清掉（避免卡狀態）
+  setTimeout(() => {
+    s3.classList.remove("shine");
+  }, 1900);
+
+}, 260);
+
+  // 🔥 綁定狀態（資料載入完成後才決定顯示）
+  const bindStatus = document.getElementById("bindStatus");
+  const bindBtn = document.getElementById("bindBtn");
+
+  // 每次重新載入／切換車輛時，先重置顯示狀態
+  bindStatus.style.display = "none";
+  bindStatus.classList.remove("show");
+  bindBtn.style.display = "none";
+
+  // 只有有效車牌、且目前 LINE 尚未綁定，才顯示綁定按鈕
+  const validPlate = data.plate != null &&
+    String(data.plate).trim() !== "" &&
+    String(data.plate).trim().toLowerCase() !== "null" &&
+    String(data.plate).trim().toLowerCase() !== "undefined";
+
+  if(data.isBound === true){
+    bindStatus.style.display = "inline-block";
+    bindStatus.classList.add("show");
+  }else if(isLine() && validPlate){
+    bindBtn.style.display = "block";
+  }
+
+  // 🔥 多車下拉 + 切換（完整版）
+  if(data.cars && data.cars.length > 1){
+
+    const select = document.getElementById("carSelect");
+
+    select.style.display = "block";
+    select.innerHTML = "";
+
+    data.cars.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p;
+      select.appendChild(opt);
+    });
+
+    select.value = data.plate;
+
+    // ✅🔥 切換車輛（一定要在這裡）
+    select.onchange = function(){
+
+      const newPlate = this.value;
+
+      const userId = LINE_PROFILE?.userId || "";
+
+      window.location.href =
+        window.location.pathname +
+        "?plate=" + encodeURIComponent(newPlate) +
+        "&userId=" + encodeURIComponent(userId);
+
+    };
+  }
+}
+  
+function formatDate(d){
+  if(!d) return "";
+
+  const date = new Date(d);
+
+  if(isNaN(date.getTime())) return d;
+
+  return date.getFullYear() + "/" + 
+         (date.getMonth()+1) + "/" + 
+         date.getDate();
+}
+  
+function renderData(data){
+
+  // 🔥 車牌（大字）
+  const plateEl = document.querySelector(".plate-big");
+  if(plateEl){
+    plateEl.innerText = data.plate || "---";
+  }
+
+  // 案件狀態
+  const statusEl = document.querySelector(".status");
+
+if(statusEl){
+
+  const status = data.status || "未知";
+
+  let color = "#999";
+  let bg = "rgba(255,255,255,0.1)";
+
+  if(status === "施工中"){
+    color = "#f1c40f";
+    bg = "rgba(241,196,15,0.15)";
+  }
+  else if(status === "已完工"){
+    color = "#00E676";
+    bg = "rgba(0,230,118,0.15)";
+  }
+  else if(status === "結案"){
+   color = "#00E676";
+    bg = "rgba(0,230,118,0.15)";
+  }
+  else if(status === "待施工"){
+    color = "#bbb";
+    bg = "rgba(255,255,255,0.08)";
+  }
+
+  statusEl.innerText = status;
+  statusEl.style.color = color;
+  statusEl.style.background = bg;
+  statusEl.classList.add("show");
+
+}
+
+  // 🔥 車主
+  const ownerEl = document.querySelector(".owner");
+  if(LINE_PROFILE){
+  renderOwnerProfile(LINE_PROFILE);
+}else{
+  ownerEl.innerText = "Owner："+(data.owner || "---");
+}
+
+  // 🔥 車輛資訊
+  const carEl = document.querySelector(".car-info");
+  if(carEl){
+    carEl.innerText =
+      `${data.brand || ""}｜${data.model || ""}｜${data.color || ""}`;
+  }
+
+  const metaEl = document.querySelector(".meta");
+
+if(metaEl){
+  metaEl.innerText = `VID｜${data.vehicleId || "---"}`;
+}
+
+}
+  
+// ===== 讀資料 =====
+function loadData(){
+
+  const params = new URLSearchParams(window.location.search);
+
+const plate = getParam(params, "plate");
+const mode = getParam(params, "mode");
+const vehicleId = getParam(params, "VehicleID");
+
+ // ❗ 客戶模式防呆（等0.3秒 return）
+  if(!plate && !vehicleId && mode !== "mycar"){
+
+    console.log("⚠️ 第一次沒抓到參數，延遲再試");
+
+    setTimeout(loadData, 300); // 🔥 關鍵
+    return;
+  }
+
+let url =
+"https://script.google.com/macros/s/AKfycbyBXU5p7oigkfwAuacwM8b84ui1EWPAiEdmbRgocoR-iviab2pjtT77y1IhedIrpPT3/exec";
+
+// 🔥 技師模式（最高優先）
+if(vehicleId){
+
+  url += "?VehicleID=" + encodeURIComponent(vehicleId)
+       + "&callback=handleData";
+
+// 🔥 LINE 多車
+}else if(mode === "mycar"){
+
+  const userId = LINE_PROFILE?.userId || "";
+
+  url += "?userId=" + encodeURIComponent(userId)
+       + "&callback=handleData";
+
+// 🔥 客戶 QR
+}else{
+
+  let urlParams = "?plate=" + encodeURIComponent(plate);
+
+  // ✅ 只有在 LINE 裡面才帶 userId
+  if(isLine() && LINE_PROFILE?.userId){
+    urlParams += "&userId=" + encodeURIComponent(LINE_PROFILE.userId);
+  }
+
+  url += urlParams + "&callback=handleData";
+}
+
+const script = document.createElement("script");
+script.src = url;
+document.body.appendChild(script);
+}
+
+// ===== 主卡片資料出現時序控制 =====
+window.onload = async function(){
+
+  // 🔥 LINE 判斷
+  // 綁定按鈕改由 handleData() 在資料載入完成後決定，避免過早出現
+  if(isLine()){
+    document.getElementById("bindBtn").style.display="none";
+  }else{
+    console.log("瀏覽器模式");
+  }
+
+  const view = getViewType();
+  if(view.type === "tech"){
+    document.body.classList.add("tech-mode");
+  }
+
+  const s1 = document.querySelector(".s1");
+  const s3 = document.querySelector(".s3");
+
+  // 🔥 速度優化：一般車牌 / 技師模式不再等待 LIFF
+  // mycar 模式仍需等待 LINE_PROFILE，避免影響原本多車功能
+  if(view.type === "mycar"){
+    await initLine();
+    loadData();
+  }else{
+    // 客戶 QR / 技師模式：資料與 LIFF 同時進行
+    initLine().then(() => {
+      // 若資料已先回來，再補上 LINE 車主資訊
+      if(window._DATA_READY && LINE_PROFILE){
+        renderOwnerProfile(LINE_PROFILE);
+      }
+    });
+
+    loadData();
+  }
+  
+  // ✅ 動畫與資料讀取完全並行，不再被 LIFF 卡住
+  setTimeout(() => s1.classList.add("show"), 910); //S1時間
+  setTimeout(() => s3.classList.add("show"), 1491); //s3時間
+};
+
+function openLine(){
+
+  const url = "https://line.me/R/ti/p/@mens.stu"; // 官方LINE帳號
+
+  window.open(url, "_blank");
+}
+  
+</script>
+
+</body>
+</html>
