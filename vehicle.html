@@ -1533,16 +1533,17 @@ window.onload = async function(){
     await initLine();
     loadData();
   }else{
-    // 客戶 QR / 技師模式：資料與 LIFF 同時進行
-    initLine().then(() => {
-      // 若資料已先回來，再補上 LINE 車主資訊
-      if(window._DATA_READY && LINE_PROFILE){
-        renderOwnerProfile(LINE_PROFILE);
-      }
-    });
-
+  // 🔥 客戶 QR：
+  // LINE 中必須先取得 userId，再查詢資料，
+  // 才能正確判斷目前 LINE 是否已綁定此車
+  if(isLine()){
+    await initLine();
+    loadData();
+  }else{
+    // 一般瀏覽器維持原本速度
     loadData();
   }
+}
   
   // ✅ 動畫與資料讀取完全並行，不再被 LIFF 卡住
   setTimeout(() => s1.classList.add("show"), 910); //S1時間
